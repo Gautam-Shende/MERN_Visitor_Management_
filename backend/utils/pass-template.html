@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Visitor Pass</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: white;
+        }
+        .pass {
+            max-width: 550px;
+            min-height: 90vh;
+            margin: auto;
+            border: 2px solid #4caf50;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .header {
+            background: #1a237e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .header h1 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        .header p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        .badge {
+            background: #4caf50;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-top: 8px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .visitor-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1a237e;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        .information {
+            margin-bottom: 12px;
+            display: flex;
+            gap: 20px;
+            font-size: 16px;
+        }
+        .label {
+            width: 90px;
+            font-weight: bold;
+            color: #555;
+        }
+        .value {
+            display: flex;
+            color: #333;
+        }
+        .qr {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        .qr img {
+            width: 180px;
+            height: 180px;
+        }
+        .qr-section p {
+            font-size: 11px;
+            color: #666;
+            margin-top: 8px;
+        }
+        .pass-id {
+            background: #f5f5f5;
+            padding: 10px;
+            text-align: center;
+            font-size: 10px;
+            border-radius: 6px;
+            word-break: break-all;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 12px;
+            text-align: center;
+            font-size: 14px;
+            color: #999;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="pass">
+        <div class="header">
+            <h1>{{company_name}}</h1>
+            <p>Digital Access Pass</p>
+            <span class="badge">VISITOR PASS</span>
+        </div>
+        
+        <div class="content">
+            <div class="visitor-name">{{visitor_name}}</div>
+            
+            <div class="information">
+                <div class="label">📧 Email</div>
+                <div class="value">{{visitor_email}}</div>
+            </div>
+            <div class="information">
+                <div class="label">📞 Phone</div>
+                <div class="value">{{visitor_phone}}</div>
+            </div>
+            <div class="information">
+                <div class="label">📅 Date</div>
+                <div class="value">{{visit_date}}</div>
+            </div>
+            <div class="information">
+                <div class="label">⏰ Time</div>
+                <div class="value">{{visit_time}}</div>
+            </div>
+            <div class="information">
+                <div class="label">👤 Host</div>
+                <div class="value">{{host_name}}</div>
+            </div>
+            
+            <div class="qr">
+                <!-- <img src="https://howtodotechystuff.wordpress.com/wp-content/uploads/2017/03/qr_code_for_mobile_english_wikipedia-svg.png?w=177&h=177" alt=""> -->
+                <img src="{{qr_code}}" alt="QR Code">
+                <p>Scan at entrance</p>
+            </div>
+            
+            <div class="pass-id">
+                <strong>Pass ID:</strong> {{pass_id}}
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Valid for one-time entry • Carry valid ID</p>
+            <p>Generated: {{generated_date}}</p>
+        </div>
+    </div>
+</body>
+</html>
