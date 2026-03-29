@@ -101,10 +101,10 @@ Detailed API documentation is available inside the backend folder.
 ## Deployment
 
 Frontend (Netlify):
-https://your-frontend-url.netlify.app
+https://mern-visitor-management-frontend.onrender.com
 
 Backend (Render):
-https://your-backend-url.onrender.com
+https://mern-visitor-managment-backend.onrender.com
 
 ---
 
