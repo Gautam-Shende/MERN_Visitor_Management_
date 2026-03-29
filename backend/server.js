@@ -3,11 +3,13 @@ import dotenv from "dotenv"
 import cors from "cors"
 import connectDB from "./config/db.js"
 import authRoutes from "./routes/authRoutes.js"
+
 import visitorRoutes from "./routes/visitorRoutes.js"
 import appointmentRoutes from "./routes/appointmentRoutes.js"
 import passRoutes from "./routes/passRoutes.js"
 import dashboardRoutes from "./routes/dashboardRoutes.js"
 import reportRoutes from "./routes/reportRoutes.js"
+
 import exportRoutes from "./routes/exportRoutes.js"
 import userRoutes from "./routes/userRoutes.js"
 import visitorAuthRoutes from "./routes/visitorAuthRoutes.js"
@@ -17,31 +19,30 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
-// app.use(cors({
-//   origin: "https://mern-visitor-managment-frontend.onrender.com",
-//   credentials: true
-// }));
+// app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true
+}));
 
 app.use(express.json());
 
 connectDB();
 
-app.use("/", authRoutes);
-app.use("/", visitorRoutes);
-app.use("/", appointmentRoutes);
-app.use("/", passRoutes);
-app.use("/", dashboardRoutes);
-app.use("/", reportRoutes);
-app.use("/", exportRoutes);
-app.use("/", userRoutes);
-app.use("/", visitorAuthRoutes);
+app.use("/", authRoutes)
+app.use("/", visitorRoutes)
+app.use("/", appointmentRoutes)
+app.use("/", passRoutes)
+app.use("/", dashboardRoutes)
+app.use("/", reportRoutes)
+app.use("/", exportRoutes)
+app.use("/", userRoutes)
+app.use("/", visitorAuthRoutes)
 
-// // ✅ TEST EMAIL ROUTE
 // app.get("/test-email", async (req, res) => {
 //   try {
 //     const response = await axios.post(
-//       "https://api.emailjs.com/api/v1.0/email/send",
+//       process.env.FRONTEND_URL,
 //       {
 //         service_id: process.env.EMAILJS_SERVICE_ID,
 //         template_id: process.env.EMAILJS_TEMPLATE_ID,
