@@ -30,7 +30,7 @@ Visitors can register, employees manage requests, and admins approve or reject a
 
 ## Project Structure
 
-assignment-9/
+MERN_Visitor_Management/
 ├── backend/      # API and server logic
 └── frontend/     # React frontend
 
