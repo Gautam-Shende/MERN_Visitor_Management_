@@ -6,8 +6,8 @@ export const getVisitorReport = async (req, res) => {
 
     const visitors = await reportService.getVisitorReport(req.query);
 
-    // console.log("visito Report. status code (201) created", visitor)
-    res.status(201).json(visitors);
+    // console.log("visito Report. status code (200) Ok", visitor)
+    res.status(200).json(visitors);
  
   } 
   catch (error) {
