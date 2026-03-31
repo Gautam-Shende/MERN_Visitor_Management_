@@ -69,10 +69,10 @@ Detailed API documentation is available inside the `backend` folder.
 ## 🧪 Postman API Testing
 
 ### Quick Import
-[![Run in Postman](https://run.pstmn.io/button.svg)](./postman/Visitor-Management-System.postman_collection.json)
+[![Run in Postman](https://run.pstmn.io/button.svg)](./Visitor-Management-System.postman_collection.json)
 
 ### Download Collection
-- [JSON Collection](./postman/Visitor-Management-System.postman_collection.json)
+- [JSON Collection](./Visitor-Management-System.postman_collection.json)
 
 ### Import Instructions
 1. Download the JSON file
