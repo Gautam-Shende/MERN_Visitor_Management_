@@ -4,6 +4,8 @@
 A full‑stack Visitor Management System built with the MERN stack (MongoDB, Express, React, Node.js).  
 Visitors can register, employees manage requests, and admins approve or reject access. The backend follows a clean, layered architecture (Controller → Service → Model) for maintainability and scalability.
 
+- Github repo - https://github.com/Gautam-Shende/MERN_Visitor_Management_
+
 ## Features
 
 - 🔐 JWT authentication (login / register)
@@ -69,6 +71,21 @@ VITE_API_URL=http://localhost:5000/api
 ## API Documentation
 
 Detailed API documentation is available inside the `backend` folder.
+
+## 🌱 Database Seeding
+
+### Default Users
+
+The system comes with 3 default user accounts for testing:
+
+| Role | Email | Password | Access |
+|------|-------|----------|--------|
+| Admin | `admin@mail.com` | `admin123` | Full system access |
+| Employee | `employee@mail.com` | `employee123` | Visitor & appointment management |
+| Security | `security@mail.com` | `security123` | QR scanning & check-in/out |
+
+### Seed File Location
+
 
 ## 🧪 Postman API Testing
 
