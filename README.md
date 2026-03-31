@@ -69,10 +69,10 @@ Detailed API documentation is available inside the `backend` folder.
 ## 🧪 Postman API Testing
 
 ### Quick Import
-[![Run in Postman](https://run.pstmn.io/button.svg)](/Visitor-Management-System.postman_collection.json)
+[![Run in Postman](https://run.pstmn.io/button.svg)](./Visitor-Management-System.postman_collection.json)
 
 ### Download Collection
-- [JSON Collection](/Visitor-Management-System.postman_collection.json)
+- [JSON Collection](./Visitor-Management-System.postman_collection.json)
 
 ### Import Instructions
 1. Download the JSON file
@@ -83,12 +83,12 @@ Detailed API documentation is available inside the `backend` folder.
 ### Sample API Request (cURL)
 ## Admin Login
 POST http://localhost:5000/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"admin@mail.com","password":"admin123"}'
+  - "Content-Type: application/json" \
+  - '{"email":"admin@mail.com","password":"admin123"}'
 
 ## Get All Visitors
 GET http://localhost:5000/api/visitors \
-  -H "Authorization: Bearer YOUR_TOKEN"
+  - "Authorization: Bearer YOUR_TOKEN"
 
 ## Deployment
 
