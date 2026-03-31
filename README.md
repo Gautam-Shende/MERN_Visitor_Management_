@@ -4,6 +4,8 @@
 A full‑stack Visitor Management System built with the MERN stack (MongoDB, Express, React, Node.js).  
 Visitors can register, employees manage requests, and admins approve or reject access. The backend follows a clean, layered architecture (Controller → Service → Model) for maintainability and scalability.
 
+- Github repo - https://github.com/Gautam-Shende/MERN_Visitor_Management_
+
 ## Features
 
 - 🔐 JWT authentication (login / register)
