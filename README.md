@@ -20,13 +20,17 @@ Visitors can register, employees manage requests, and admins approve or reject a
 - React (Vite)  
 - Tailwind CSS  
 - Axios  
-- React Router DOM  
+- React Router DOM
+- React Scanner
+- React Charts
 
 **Backend**  
 - Node.js  
 - Express.js  
 - MongoDB + Mongoose  
 - JSON Web Tokens (JWT)
+- EmailJs
+- Cloudinary
 
 ## Project Structure
 
@@ -69,10 +73,10 @@ Detailed API documentation is available inside the `backend` folder.
 ## 🧪 Postman API Testing
 
 ### Quick Import
-[![Run in Postman](https://run.pstmn.io/button.svg)](./Visitor-Management-System.postman_collection.json)
+[![Run in Postman](https://run.pstmn.io/button.svg)](./MERN_Visitor-Management-System.postman_collection.json)
 
 ### Download Collection
-- [JSON Collection](./Visitor-Management-System.postman_collection.json)
+- [JSON Collection](./MERN_Visitor-Management-System.postman_collection.json)
 
 ### Import Instructions
 1. Download the JSON file
