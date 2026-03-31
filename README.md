@@ -70,6 +70,21 @@ VITE_API_URL=http://localhost:5000/api
 
 Detailed API documentation is available inside the `backend` folder.
 
+## 🌱 Database Seeding
+
+### Default Users
+
+The system comes with 3 default user accounts for testing:
+
+| Role | Email | Password | Access |
+|------|-------|----------|--------|
+| Admin | `admin@mail.com` | `admin123` | Full system access |
+| Employee | `employee@mail.com` | `employee123` | Visitor & appointment management |
+| Security | `security@mail.com` | `security123` | QR scanning & check-in/out |
+
+### Seed File Location
+
+
 ## 🧪 Postman API Testing
 
 ### Quick Import
