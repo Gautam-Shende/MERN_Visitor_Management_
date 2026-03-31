@@ -66,10 +66,29 @@ VITE_API_URL=http://localhost:5000/api
 
 Detailed API documentation is available inside the `backend` folder.
 
-## Testing
+## 🧪 Postman API Testing
 
-- All APIs tested with Postman (both success & error cases)  
-- Postman collection included in the repository
+### Quick Import
+[![Run in Postman](https://run.pstmn.io/button.svg)](./postman/Visitor-Management-System.postman_collection.json)
+
+### Download Collection
+- [JSON Collection](./postman/Visitor-Management-System.postman_collection.json)
+
+### Import Instructions
+1. Download the JSON file
+2. Open Postman → **Import** → **Upload Files**
+3. Select the downloaded file
+4. Start testing!
+
+### Sample API Request (cURL)
+## Admin Login
+POST http://localhost:5000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@mail.com","password":"admin123"}'
+
+## Get All Visitors
+GET http://localhost:5000/api/visitors \
+  -H "Authorization: Bearer YOUR_TOKEN"
 
 ## Deployment
 
