@@ -1,10 +1,10 @@
 
-## Visitor Management System (MERN Stack)
+# Visitor Management System (MERN Stack)
 
 A full‑stack Visitor Management System built with the MERN stack (MongoDB, Express, React, Node.js).  
 Visitors can register, employees manage requests, and admins approve or reject access. The backend follows a clean, layered architecture (Controller → Service → Model) for maintainability and scalability.
 
-# Features
+## Features
 
 - 🔐 JWT authentication (login / register)
 - 🎭 Role‑based access control (Admin, Employee, Visitor)
@@ -28,30 +28,30 @@ Visitors can register, employees manage requests, and admins approve or reject a
 - MongoDB + Mongoose  
 - JSON Web Tokens (JWT)
 
-# Project Structure
+## Project Structure
 
 assignment-9/
 ├── backend/      # API and server logic
 └── frontend/     # React frontend
 
-# Local Setup
+## Local Setup
 
-# 1. Clone the repository
+### 1. Clone the repository
 git clone <your-repo-link>
 
-# 2. Backend setup
+### 2. Backend setup
 
 cd backend
 npm install
 npm run dev
 
-# 3. Frontend setup
+### 3. Frontend setup
 
 cd frontend
 npm install
 npm run dev
 
-# Environment Variables
+### Environment Variables
 
 **Backend (`.env`)**  
 PORT=5000
