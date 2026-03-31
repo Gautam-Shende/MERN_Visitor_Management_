@@ -20,13 +20,17 @@ Visitors can register, employees manage requests, and admins approve or reject a
 - React (Vite)  
 - Tailwind CSS  
 - Axios  
-- React Router DOM  
+- React Router DOM
+- React Scanner
+- React Charts
 
 **Backend**  
 - Node.js  
 - Express.js  
 - MongoDB + Mongoose  
 - JSON Web Tokens (JWT)
+- EmailJs
+- Cloudinary
 
 ## Project Structure
 
@@ -66,10 +70,29 @@ VITE_API_URL=http://localhost:5000/api
 
 Detailed API documentation is available inside the `backend` folder.
 
-## Testing
+## 🧪 Postman API Testing
 
-- All APIs tested with Postman (both success & error cases)  
-- Postman collection included in the repository
+### Quick Import
+[![Run in Postman](https://run.pstmn.io/button.svg)](./MERN_Visitor_Managment.postman_collection.json)
+
+### Download Collection
+- [JSON Collection](./MERN_Visitor_Managment.postman_collection.json)
+
+### Import Instructions
+1. Download the JSON file
+2. Open Postman → **Import** → **Upload Files**
+3. Select the downloaded file
+4. Start testing!
+
+### Sample API Request (cURL)
+## Admin Login
+POST http://localhost:5000/api/auth/login \
+  - "Content-Type: application/json" \
+  - '{"email":"admin@mail.com","password":"admin123"}'
+
+## Get All Visitors
+GET http://localhost:5000/api/visitors \
+  - "Authorization: Bearer YOUR_TOKEN"
 
 ## Deployment
 
