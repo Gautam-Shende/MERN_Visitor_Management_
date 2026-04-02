@@ -23,6 +23,7 @@ This is the frontend of the Visitor Management System built using React (Vite). 
 * Axios
 * React Router DOM
 * React Icons
+* React Toast Notifications
 
 ---
 
@@ -32,9 +33,7 @@ src/
 │── components/      # Reusable UI components
 │── pages/           # Application pages
 │── context/         # Global state
-│── services/        # API calls
-│── hooks/           # Custom hooks
-│── utils/           # Utility functions
+│── services/        # API calls      
 │── App.jsx
 │── main.jsx
 
@@ -56,11 +55,10 @@ src/
 5. Start development server
    npm run dev
 
----
 
 ## Environment Variables
 
-VITE_API_URL=http://localhost:5000/api
+VITE_API_URL=https://mern-visitor-managment-backend.onrender.com/api
 
 (Replace with deployed backend URL in production)
 
@@ -81,38 +79,15 @@ POST /api/auth/login → Login user
 
 * Login Page → User authentication
 * Register Page → Create account
-* Dashboard → Role-based UI
+* Dashboard → Role-based UI access
 * Visitor List → View visitors
 * Add Visitor → Create new visitor
 * Search → Filter visitors
 
----
-
-## Build for Production
-
-To create production build:
-
-npm run build
-
----
-
 ## Deployment
 
-Frontend is deployed on Netlify.
+Frontend is deployed on Render.
 
 Live URL:
-https://your-frontend-url.netlify.app
+https://mern-visitor-management-frontend.onrender.com
 
----
-
-## Notes
-
-* Backend must be running for frontend to work
-* Update API base URL in `.env` for production
-* Keep code clean and remove unused files
-
----
-
-## Author
-
-Gautam
