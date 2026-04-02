@@ -61,7 +61,7 @@ npm run dev
 ### Environment Variables
 
 **Backend (`.env`)**  
-PORT=5000
+PORT=4000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 
@@ -105,12 +105,12 @@ The system comes with 3 default user accounts for testing:
 
 ### Sample API Request (cURL)
 ## Admin Login
-POST http://localhost:5000/api/auth/login 
+POST http://localhost:4000/api/auth/login 
   - "Content-Type: application/json" \
   - '{"email":"admin@mail.com","password":"admin123"}'
 
 ## Get All Visitors
-GET http://localhost:5000/api/visitors 
+GET http://localhost:4000/api/visitors  \
 Authorization - Bearer Token
 ## Deployment
 
