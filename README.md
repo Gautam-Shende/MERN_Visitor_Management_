@@ -25,6 +25,7 @@ Visitors can register, employees manage requests, and admins approve or reject a
 - React Router DOM
 - React Scanner
 - React Charts
+- React Toast Notification
 
 **Backend**  
 - Node.js  
@@ -60,13 +61,14 @@ npm run dev
 ### Environment Variables
 
 **Backend (`.env`)**  
-PORT=5000
+PORT=4000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 
 **Frontend (`.env`)**  
 
-VITE_API_URL=http://localhost:4000/api
+VITE_API_URL=https://mern-visitor-managment-backend.onrender.com/api
+
 
 ## API Documentation
 
@@ -103,14 +105,13 @@ The system comes with 3 default user accounts for testing:
 
 ### Sample API Request (cURL)
 ## Admin Login
-POST http://localhost:5000/api/auth/login \
+POST http://localhost:4000/api/auth/login 
   - "Content-Type: application/json" \
   - '{"email":"admin@mail.com","password":"admin123"}'
 
 ## Get All Visitors
-GET http://localhost:5000/api/visitors \
-  - "Authorization: Bearer YOUR_TOKEN"
-
+GET http://localhost:4000/api/visitors  \
+Authorization - Bearer Token
 ## Deployment
 
 - **Frontend** (Render): [https://mern-visitor-management-frontend.onrender.com](https://mern-visitor-management-frontend.onrender.com)  
