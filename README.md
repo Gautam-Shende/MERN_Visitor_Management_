@@ -66,7 +66,7 @@ JWT_SECRET=your_secret_key
 
 **Frontend (`.env`)**  
 
-VITE_API_URL=http://localhost:5000/api
+VITE_API_URL=http://localhost:4000/api
 
 ## API Documentation
 
@@ -129,6 +129,3 @@ The backend follows a layered pattern:
 
 This separation keeps the code clean, testable, and easy to maintain.
 
-## Author
-
-**Gautam**
