@@ -59,19 +59,19 @@ const Profile = () => {
           <Card className="text-center">
             <div className="flex flex-col items-center">
               <div className="relative mb-4">
-                {/* {user?.photo ? (
+                {user?.photo ? (
                   <img 
                     src={user.photo} 
                     alt={user?.name} 
                     className="w-28 h-28 rounded-2xl object-cover border-4 border-white shadow-lg"
                   />
-                ) : ( */}
+                ) : (
                   <div className="w-28 h-28 rounded-2xl bg-[#2463eb] flex items-center justify-center shadow-lg">
                     <span className="text-white text-4xl font-bold">
-                      {user?.role?.photo}
+                      {user?.name?.charAt(0).toUpperCase()}
                     </span>
                   </div>
-                {/* )} */}
+                 )} 
               </div>
 
               <h2 className="text-xl font-bold text-[#0b1e3c] mb-1">{user?.name}</h2>
