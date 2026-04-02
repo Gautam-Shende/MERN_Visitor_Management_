@@ -6,6 +6,9 @@ import {
   createAppointment, approveAppointment, rejectAppointment,
   getAppointments,
   getAppointmentById,
+   getRequestedAppointments,        // NEW
+  getRequestedAppointmentsCount,   // NEW
+  convertRequestToAppointment 
 } from "../controllers/appointmentController.js"
 
 // import { roleMiddleware } from "../middleware/roleMiddleware.js"
@@ -41,5 +44,27 @@ router.put("/api/appointments/reject/:id",
 
 router.get("/api/appointments/:id", protect,
    getAppointmentById)
+
+   // Employee - Get requested appointments
+router.get("/api/appointments/requested",
+  protect,
+  authorizeRoles("employee", "admin"),
+  getRequestedAppointments
+)
+
+// Employee - Get count for badge
+router.get("/api/appointments/requested/count",
+  protect,
+  authorizeRoles("employee", "admin"),
+  getRequestedAppointmentsCount
+)
+
+// Employee - Convert request to appointment
+router.put("/api/appointments/:id/convert",
+  protect,
+  authorizeRoles("employee", "admin"),
+  convertRequestToAppointment
+)
+
 
 export default router

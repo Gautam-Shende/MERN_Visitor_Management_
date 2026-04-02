@@ -2,6 +2,8 @@
 import { NavLink } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext"
 import { useEffect, useState } from "react"
+import { getPendingRequestsCount } from '../../services/appointmentService'  // NEW
+
 
 import {
   FaHome,
@@ -23,6 +25,22 @@ const Sidebar = ({ isOpen, onClose }) => {
   // const [isMobile, setIsMobile] = useState()
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024)
+  const [requestCount, setRequestCount] = useState(0)
+
+useEffect(() => {
+  if (user?.role === 'employee' || user?.role === 'admin') {
+    fetchRequestCount()
+  }
+}, [user])
+
+const fetchRequestCount = async () => {
+  try {
+    const res = await getPendingRequestsCount()
+    setRequestCount(res.count)
+  } catch (error) {
+    console.error('Failed to fetch count')
+  }
+}
 
   // useEffect(() => {
   //   const handleResize = () => setIsMobile())
@@ -69,6 +87,13 @@ const Sidebar = ({ isOpen, onClose }) => {
   ]
 
   const employeeLinks = [
+     { 
+    to: "/employee/requests", 
+    icon: FaCalendarAlt, 
+    label: "Pending Requests", 
+    roles: ["employee"],
+    badge: requestCount  // Add badge count
+  },
     { to: "/visitors", icon: FaUsers, label: "Visitors", roles: ["employee"] },
     { to: "/appointments", icon: FaCalendarAlt, label: "Appointments", roles: ["employee"] },
     { to: "/passes", icon: FaPassport, label: "Passes", roles: ["employee"] },

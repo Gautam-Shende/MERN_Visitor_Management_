@@ -85,3 +85,50 @@ export const getAppointmentById = async (id) => {
   
   return appointment
 }
+
+// Get all requested appointments
+export const getRequestedAppointmentsService = async () => {
+  const requests = await Appointment.find({
+    status: "requested",
+    requestedByVisitor: true
+  })
+  .populate("visitor", "name email phone photo purpose")
+  .sort({ createdAt: -1 })
+  
+  return requests
+}
+
+// Get count for badge
+export const getRequestedAppointmentsCountService = async () => {
+  const count = await Appointment.countDocuments({
+    status: "requested",
+    requestedByVisitor: true
+  })
+  return count
+}
+
+// Convert request to actual appointment (employee confirms)
+export const convertRequestToAppointmentService = async (requestId, employeeId, appointmentData) => {
+  const { date, hostId } = appointmentData
+  
+  const request = await Appointment.findById(requestId).populate("visitor")
+  
+  if (!request) {
+    throw new Error("Request not found")
+  }
+  
+  if (request.status !== "requested") {
+    throw new Error("This request has already been processed")
+  }
+  
+  // Update the same appointment
+  request.date = new Date(date)
+  request.host = hostId || employeeId
+  request.status = "pending"  // Now pending for admin approval
+  request.requestedByVisitor = false
+  await request.save()
+  
+  await request.populate("host", "name email")
+  
+  return request
+}

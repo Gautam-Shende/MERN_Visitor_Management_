@@ -1,6 +1,8 @@
 import Visitor from "../models/Visitor.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
+import Appointment from "../models/Appointment.js"
+
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" })
@@ -109,4 +111,53 @@ export const updateVisitorProfileService = async (visitorId, updateData, file) =
     phone: visitor.phone,
     photo: visitor.photo
   }
+}
+
+
+// ==================== NEW FUNCTION ====================
+
+export const requestAppointmentService = async (visitorId, requestData) => {
+  const { preferredDate, purpose, message } = requestData
+  
+  // Check if visitor exists
+  const visitor = await Visitor.findById(visitorId)
+  if (!visitor) {
+    throw new Error("Visitor not found")
+  }
+  
+  // Check if already has pending request
+  const existingRequest = await Appointment.findOne({
+    visitor: visitorId,
+    status: "requested"
+  })
+  
+  if (existingRequest) {
+    throw new Error("You already have a pending request")
+  }
+  
+  // Create appointment request
+  const appointmentRequest = await Appointment.create({
+    visitor: visitorId,
+    preferredDate: new Date(preferredDate),
+    status: "requested",
+    requestedByVisitor: true,
+    purpose: purpose || visitor.purpose,
+    message: message || "",
+    date: null,
+    host: null
+  })
+  
+  return appointmentRequest
+}
+
+// Get visitor's own requests
+export const getMyRequestsService = async (visitorId) => {
+  const requests = await Appointment.find({
+    visitor: visitorId,
+    requestedByVisitor: true
+  })
+  .populate("host", "name email")
+  .sort({ createdAt: -1 })
+  
+  return requests
 }

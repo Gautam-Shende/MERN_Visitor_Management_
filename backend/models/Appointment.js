@@ -1,5 +1,5 @@
+// backend/models/Appointment.js
 import mongoose from "mongoose"
-
 
 const appointmentSchema = new mongoose.Schema(
   {
@@ -9,23 +9,37 @@ const appointmentSchema = new mongoose.Schema(
       required: true,
     },
     host: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "admin",
-    //   required: true,
-    // },
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: false,  // Visitor request mein host nahi hoga
+    },
+    date: {
+      type: Date,
+      required: false,  // Visitor request mein date nahi hogi
+    },
+    preferredDate: {     // NEW - Visitor ki preferred date
+      type: Date,
       required: false,
     },
-    date: { type: Date, required: true },
     status: {
       type: String,
-      enum: ["pending", "approved", "rejected"],
+      enum: ["requested", "pending", "approved", "rejected"],
       default: "pending",
-      // required: false,
     },
+    requestedByVisitor: {  // NEW - Request hai ya direct appointment
+      type: Boolean,
+      default: false,
+    },
+    purpose: {
+      type: String,
+      default: "General Visit"
+    },
+    message: {
+      type: String,
+      default: ""
+    }
   },
-  { timestamps: true },
+  { timestamps: true }
 )
 
-export default mongoose.model("Appointment", appointmentSchema);
+export default mongoose.model("Appointment", appointmentSchema)

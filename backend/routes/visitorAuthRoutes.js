@@ -7,6 +7,8 @@ import { upload } from "../middleware/uploadMiddleware.js";
 import {
   registerVisitor,loginVisitor,getVisitorProfile,
   updateVisitorProfile,
+  requestAppointment,      // NEW
+  getMyRequests       
 } from "../controllers/visitorAuthController.js"
 
 import {
@@ -28,6 +30,19 @@ router.post("/api/visitor/login",
 
 router.get("/api/visitor/profile", protectVisitor, 
   getVisitorProfile)
+
+// Visitor submits appointment request
+router.post("/api/visitor/appointments/request",
+  protectVisitor,
+  requestAppointment
+)
+
+// Visitor gets their requests
+router.get("/api/visitor/appointments/requests",
+  protectVisitor,
+  getMyRequests
+)
+
 
 // router.post("/api/visitor/profile", 
 //   upload.single("photo"), updateVisitorProfile)

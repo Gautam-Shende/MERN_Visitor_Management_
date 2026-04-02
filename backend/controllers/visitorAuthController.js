@@ -93,3 +93,107 @@ export const updateVisitorProfile = async (req, res) => {
     res.status(500).json({ error: "Failed to update profile" })
   }
 }
+
+
+// ==================== NEW FUNCTIONS ====================
+
+// Visitor submits appointment request
+
+
+// Visitor submits appointment request
+export const requestAppointment = async (req, res) => {
+  try {
+    const visitorId = req.visitor?._id
+    
+    if (!visitorId) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized. Please log in again"
+      })
+    }
+    
+    const { preferredDate, purpose, message } = req.body
+    
+    if (!preferredDate) {
+      return res.status(400).json({
+        success: false,
+        message: "Preferred date is required"
+      })
+    }
+    
+    if (!purpose) {
+      return res.status(400).json({
+        success: false,
+        message: "Purpose of visit is required"
+      })
+    }
+    
+    const requestDate = new Date(preferredDate)
+    if (requestDate < new Date()) {
+      return res.status(400).json({
+        success: false,
+        message: "Date must be in the future"
+      })
+    }
+    
+    const Appointment = require("../models/Appointment.js").default
+    
+    const existingRequest = await Appointment.findOne({
+      visitor: visitorId,
+      status: "requested"
+    })
+    
+    if (existingRequest) {
+      return res.status(409).json({
+        success: false,
+        message: "You already have a pending request"
+      })
+    }
+    
+    const appointmentRequest = await Appointment.create({
+      visitor: visitorId,
+      preferredDate: requestDate,
+      status: "requested",
+      requestedByVisitor: true,
+      purpose: purpose,
+      message: message || "",
+      date: null,
+      host: null
+    })
+    
+    res.status(201).json({
+      success: true,
+      message: "Appointment request sent successfully",
+      data: appointmentRequest
+    })
+    
+  } catch (error) {
+    console.error("Error in requestAppointment:", error)
+    res.status(500).json({
+      success: false,
+      message: error.message || "Failed to submit request"
+    })
+  }
+}
+
+
+
+// Visitor gets their requests
+export const getMyRequests = async (req, res) => {
+  try {
+    const visitorId = req.visitor?._id
+    
+    const requests = await getMyRequestsService(visitorId)
+    
+    res.status(200).json({
+      success: true,
+      data: requests
+    })
+    
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch requests"
+    })
+  }
+}
