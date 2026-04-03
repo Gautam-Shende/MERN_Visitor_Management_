@@ -83,11 +83,10 @@ export const getAppointmentById = async (req, res) => {
   }
 }
 
-
 // Get all requested appointments (for employee)
 export const getRequestedAppointments = async (req, res) => {
   try {
-    const requests = await getRequestedAppointmentsService()
+    const requests = await appointmentService.getRequestedAppointmentsService()  // ← FIXED
     
     res.status(200).json({
       success: true,
@@ -95,6 +94,7 @@ export const getRequestedAppointments = async (req, res) => {
     })
     
   } catch (error) {
+    console.error("Error:", error)
     res.status(500).json({
       success: false,
       message: "Failed to fetch requests"
@@ -105,7 +105,7 @@ export const getRequestedAppointments = async (req, res) => {
 // Get count for badge
 export const getRequestedAppointmentsCount = async (req, res) => {
   try {
-    const count = await getRequestedAppointmentsCountService()
+    const count = await appointmentService.getRequestedAppointmentsCountService()  // ← FIXED
     
     res.status(200).json({
       success: true,
@@ -113,6 +113,7 @@ export const getRequestedAppointmentsCount = async (req, res) => {
     })
     
   } catch (error) {
+    console.error("Error:", error)
     res.status(500).json({
       success: false,
       message: "Failed to fetch count"
@@ -134,7 +135,7 @@ export const convertRequestToAppointment = async (req, res) => {
       })
     }
     
-    const appointment = await convertRequestToAppointmentService(id, employeeId, { date, hostId })
+    const appointment = await appointmentService.convertRequestToAppointmentService(id, employeeId, { date, hostId })  // ← FIXED
     
     res.status(200).json({
       success: true,
@@ -154,5 +155,65 @@ export const convertRequestToAppointment = async (req, res) => {
       success: false,
       message: error.message || "Failed to confirm appointment"
     })
+  }
+}
+
+// Admin approves appointment
+export const adminApprove = async (req, res) => {
+  const { id } = req.params
+  const adminId = req.user?._id
+  
+  if (!id) {
+    return res.status(400).json({ error: "Appointment ID required" })
+  }
+  
+  try {
+    const appointment = await appointmentService.adminApproveAppointment(id, adminId)
+    res.status(200).json({
+      success: true,
+      message: "Appointment approved successfully",
+      data: appointment
+    })
+  } catch (error) {
+    console.log("Error approving appointment:", error.message)
+    res.status(500).json({ error: error.message })
+  }
+}
+
+// Admin rejects appointment
+export const adminReject = async (req, res) => {
+  const { id } = req.params
+  const { reason } = req.body
+  const adminId = req.user?._id
+  
+  if (!id) {
+    return res.status(400).json({ error: "Appointment ID required" })
+  }
+  
+  try {
+    const appointment = await appointmentService.adminRejectAppointment(id, adminId, reason)
+    res.status(200).json({
+      success: true,
+      message: "Appointment rejected",
+      data: appointment
+    })
+  } catch (error) {
+    console.log("Error rejecting appointment:", error.message)
+    res.status(500).json({ error: error.message })
+  }
+}
+
+// Get pending appointments for admin
+export const getPendingAppointments = async (req, res) => {
+  try {
+    const appointments = await appointmentService.getPendingAppointmentsForAdmin()
+    res.status(200).json({
+      success: true,
+      count: appointments.length,
+      data: appointments
+    })
+  } catch (error) {
+    console.log("Error fetching pending appointments:", error.message)
+    res.status(500).json({ error: "Failed to fetch appointments" })
   }
 }

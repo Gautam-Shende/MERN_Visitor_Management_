@@ -1,4 +1,3 @@
-// backend/models/Appointment.js
 import mongoose from "mongoose"
 
 const appointmentSchema = new mongoose.Schema(
@@ -11,22 +10,22 @@ const appointmentSchema = new mongoose.Schema(
     host: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: false,  // Visitor request mein host nahi hoga
+      required: false,
     },
     date: {
       type: Date,
-      required: false,  // Visitor request mein date nahi hogi
+      required: false,
     },
-    preferredDate: {     // NEW - Visitor ki preferred date
+    preferredDate: {
       type: Date,
       required: false,
     },
     status: {
       type: String,
-      enum: ["requested", "pending", "approved", "rejected"],
+      enum: ["requested", "pending", "scheduled", "approved", "rejected", "cancelled"],
       default: "pending",
     },
-    requestedByVisitor: {  // NEW - Request hai ya direct appointment
+    requestedByVisitor: {
       type: Boolean,
       default: false,
     },
@@ -37,6 +36,23 @@ const appointmentSchema = new mongoose.Schema(
     message: {
       type: String,
       default: ""
+    },
+    scheduledBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    scheduledAt: {
+      type: Date,
+    },
+    approvedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    approvedAt: {
+      type: Date,
+    },
+    rejectionReason: {
+      type: String,
     }
   },
   { timestamps: true }

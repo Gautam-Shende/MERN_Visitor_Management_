@@ -1,4 +1,5 @@
 import * as visitorAuthService from "../services/visitorAuthService.js"
+import * as appointmentService from "../services/appointmentService.js"  // Add this
 
 export const registerVisitor = async (req, res) => {
   const { name, email, password, phone, purpose } = req.body
@@ -95,17 +96,16 @@ export const updateVisitorProfile = async (req, res) => {
 }
 
 
-// ==================== NEW FUNCTIONS ====================
 
-// Visitor submits appointment request
+// ==================== APPOINTMENT FUNCTIONS ====================
 
-
-// Visitor submits appointment request
 export const requestAppointment = async (req, res) => {
   try {
     const visitorId = req.visitor?._id
-    
+    console.log("Visitor ID:", visitorId)
+
     if (!visitorId) {
+      console.log("❌ No visitor ID") 
       return res.status(401).json({
         success: false,
         message: "Unauthorized. Please log in again"
@@ -128,37 +128,11 @@ export const requestAppointment = async (req, res) => {
       })
     }
     
-    const requestDate = new Date(preferredDate)
-    if (requestDate < new Date()) {
-      return res.status(400).json({
-        success: false,
-        message: "Date must be in the future"
-      })
-    }
-    
-    const Appointment = require("../models/Appointment.js").default
-    
-    const existingRequest = await Appointment.findOne({
-      visitor: visitorId,
-      status: "requested"
-    })
-    
-    if (existingRequest) {
-      return res.status(409).json({
-        success: false,
-        message: "You already have a pending request"
-      })
-    }
-    
-    const appointmentRequest = await Appointment.create({
-      visitor: visitorId,
-      preferredDate: requestDate,
-      status: "requested",
-      requestedByVisitor: true,
-      purpose: purpose,
-      message: message || "",
-      date: null,
-      host: null
+    const appointmentRequest = await appointmentService.requestAppointmentService({
+      visitorId,
+      preferredDate,
+      purpose,
+      message
     })
     
     res.status(201).json({
@@ -176,14 +150,18 @@ export const requestAppointment = async (req, res) => {
   }
 }
 
-
-
-// Visitor gets their requests
 export const getMyRequests = async (req, res) => {
   try {
     const visitorId = req.visitor?._id
     
-    const requests = await getMyRequestsService(visitorId)
+    if (!visitorId) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized"
+      })
+    }
+    
+    const requests = await appointmentService.getMyRequestsService(visitorId)
     
     res.status(200).json({
       success: true,
@@ -191,6 +169,7 @@ export const getMyRequests = async (req, res) => {
     })
     
   } catch (error) {
+    console.error("Error in getMyRequests:", error)
     res.status(500).json({
       success: false,
       message: "Failed to fetch requests"

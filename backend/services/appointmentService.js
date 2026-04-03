@@ -86,32 +86,56 @@ export const getAppointmentById = async (id) => {
   return appointment
 }
 
-// Get all requested appointments
-export const getRequestedAppointmentsService = async () => {
-  const requests = await Appointment.find({
-    status: "requested",
-    requestedByVisitor: true
+export const requestAppointmentService = async ({ visitorId, preferredDate, purpose, message }) => {
+  // Validate date
+  const requestDate = new Date(preferredDate)
+  if (requestDate < new Date()) {
+    throw new Error("Date must be in the future")
+  }
+  
+  // Check for existing pending request
+  const existingRequest = await Appointment.findOne({
+    visitor: visitorId,
+    status: "requested"
   })
-  .populate("visitor", "name email phone photo purpose")
-  .sort({ createdAt: -1 })
+  
+  if (existingRequest) {
+    throw new Error("You already have a pending request")
+  }
+  
+  // Create new appointment request
+  const appointmentRequest = await Appointment.create({
+    visitor: visitorId,
+    preferredDate: requestDate,
+    status: "requested",
+    requestedByVisitor: true,
+    purpose: purpose,
+    message: message || "",
+    date: null,
+    host: null
+  })
+  
+  return appointmentRequest
+}
+
+// Add these functions to your existing appointmentService.js file
+
+export const getRequestedAppointmentsService = async () => {
+  const requests = await Appointment.find({ status: "requested" })
+    .populate("visitor", "name email phone")
+    .sort({ createdAt: -1 })
   
   return requests
 }
 
-// Get count for badge
 export const getRequestedAppointmentsCountService = async () => {
-  const count = await Appointment.countDocuments({
-    status: "requested",
-    requestedByVisitor: true
-  })
+  const count = await Appointment.countDocuments({ status: "requested" })
   return count
 }
 
-// Convert request to actual appointment (employee confirms)
-export const convertRequestToAppointmentService = async (requestId, employeeId, appointmentData) => {
-  const { date, hostId } = appointmentData
-  
-  const request = await Appointment.findById(requestId).populate("visitor")
+export const convertRequestToAppointmentService = async (requestId, employeeId, { date, hostId }) => {
+  // Find the request
+  const request = await Appointment.findById(requestId)
   
   if (!request) {
     throw new Error("Request not found")
@@ -121,14 +145,79 @@ export const convertRequestToAppointmentService = async (requestId, employeeId, 
     throw new Error("This request has already been processed")
   }
   
-  // Update the same appointment
+  // Update the request to scheduled appointment (NOT approved yet)
+  request.status = "pending"  // ← CHANGE: "approved" se "pending" karo
   request.date = new Date(date)
   request.host = hostId || employeeId
-  request.status = "pending"  // Now pending for admin approval
-  request.requestedByVisitor = false
+  request.scheduledBy = employeeId
+  request.scheduledAt = new Date()
+  
   await request.save()
   
+  // Populate visitor details
+  await request.populate("visitor", "name email phone")
   await request.populate("host", "name email")
   
   return request
+}
+
+// Admin approves scheduled appointment
+export const adminApproveAppointment = async (appointmentId, adminId) => {
+  const appointment = await Appointment.findById(appointmentId).populate("visitor")
+  
+  if (!appointment) {
+    throw new Error("Appointment not found")
+  }
+  
+  if (appointment.status !== "pending" && appointment.status !== "scheduled") {
+    throw new Error("Appointment cannot be approved")
+  }
+  
+  appointment.status = "approved"
+  appointment.approvedBy = adminId
+  appointment.approvedAt = new Date()
+  
+  await appointment.save()
+  
+  // Update visitor status
+  await Visitor.findByIdAndUpdate(appointment.visitor._id, { status: "approved" })
+  
+  return appointment
+}
+
+// Admin rejects scheduled appointment
+export const adminRejectAppointment = async (appointmentId, adminId, reason) => {
+  const appointment = await Appointment.findById(appointmentId).populate("visitor")
+  
+  if (!appointment) {
+    throw new Error("Appointment not found")
+  }
+  
+  if (appointment.status !== "pending" && appointment.status !== "scheduled") {
+    throw new Error("Appointment cannot be rejected")
+  }
+  
+  appointment.status = "rejected"
+  appointment.approvedBy = adminId
+  appointment.approvedAt = new Date()
+  appointment.rejectionReason = reason || "No reason provided"
+  
+  await appointment.save()
+  
+  await Visitor.findByIdAndUpdate(appointment.visitor._id, { status: "rejected" })
+  
+  return appointment
+}
+
+// Get pending appointments (for admin to review)
+export const getPendingAppointmentsForAdmin = async () => {
+  const appointments = await Appointment.find({ 
+    status: { $in: ["pending", "scheduled"] }
+  })
+    .populate("visitor", "name email phone")
+    .populate("host", "name email")
+    .populate("scheduledBy", "name email")
+    .sort({ scheduledAt: -1 })
+  
+  return appointments
 }

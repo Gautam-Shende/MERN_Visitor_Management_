@@ -5,14 +5,18 @@ import express from "express"
 import { upload } from "../middleware/uploadMiddleware.js";
 
 import {
-  registerVisitor,loginVisitor,getVisitorProfile,
+  registerVisitor,
+  loginVisitor,
+  getVisitorProfile,
   updateVisitorProfile,
   requestAppointment,      // NEW
   getMyRequests       
 } from "../controllers/visitorAuthController.js"
 
 import {
-  getMyAppointments, getVisitorDashboard,getMyPasses,
+  getMyAppointments,
+   getVisitorDashboard,
+   getMyPasses,
   getPassByAppointment,
 } from "../controllers/visitorAppointmentController.js"
 
