@@ -153,7 +153,7 @@ const fetchRequestCount = async () => {
       )}
 
       <aside
-        id="sidebar"
+        // id="sidebar"
         className={`
           fixed left-0 lg:top-0 top-16 bottom-0 z-50 w-72 bg-white shadow-xl
           flex flex-col overflow-y-auto
@@ -184,7 +184,8 @@ const fetchRequestCount = async () => {
         </div>
 
         <div className="p-6 border-b border-[#eef2f6]">
-          <div className={` flex ${user?.role === "visitor" ? `flex-col gap-1` : `space-x-3`} items-center`}>
+          <div className={` flex items-center space-x-3`}>
+          {/* <div className={` flex ${user?.role === "visitor" ? `flex-col gap-1 items-center` : `space-x-3`} items-center`}> */}
             <div className="p-2.5 rounded-xl bg-[#cbddff] border-2 border-white shadow-sm flex items-center justify-center">
               {/* {user?.role === "admin" ? <FaUserTie size={25} /> : <FaUser size={19} />} */}
               {user?.role === "admin" ? (
@@ -201,7 +202,7 @@ const fetchRequestCount = async () => {
             </div>
             <div className="flex-1">
               <p className="text-sm font-semibold text-[#0b1e3c]">{user?.name}</p>
-              <p className="text-xs text-[#5b6f87] mb-1.5">{user?.email}</p>
+              <p className={`text-xs text-[#5b6f87] mb-1.5 ${user?.role === "visitor" ? "text-[10px]" : ""}`}>{user?.email}</p>
             </div>
             <div className="mr-4">
               <span className={`flex items-center gap-1 text-xs px-1 py-1 rounded-lg font-medium ${getRoleBadge()}`}>
