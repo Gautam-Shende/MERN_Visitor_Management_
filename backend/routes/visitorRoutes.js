@@ -3,11 +3,11 @@ import express from "express"
 
 import { getVisitors,
   getVisitorById,
-} from "../../controllers/visitorController.js"
+} from "../controllers/visitorController.js"
 
 // import Visitor from "../models/Visitor.js"
-import { protect } from "../../middleware/authMiddleware.js"
-import { authorizeRoles } from "../../middleware/roleMiddleware.js"
+import { protect } from "../middleware/authMiddleware.js"
+import { authorizeRoles } from "../middleware/roleMiddleware.js"
 //
 // import { upload } from "../middleware/uploadMiddleware.js";
 
