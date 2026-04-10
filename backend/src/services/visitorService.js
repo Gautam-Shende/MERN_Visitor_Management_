@@ -1,4 +1,4 @@
-import Visitor from "../models/Visitor.js"
+import Visitor from "../../models/Visitor.js"
 
 export const getAllVisitors = async () => {
   return await Visitor.find()
