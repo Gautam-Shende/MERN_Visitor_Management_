@@ -2,6 +2,8 @@
 import { NavLink } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext"
 import { useEffect, useState } from "react"
+import { getPendingRequestsCount } from '../../services/appointmentService'  // NEW
+
 
 import {
   FaHome,
@@ -23,6 +25,22 @@ const Sidebar = ({ isOpen, onClose }) => {
   // const [isMobile, setIsMobile] = useState()
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024)
+  const [requestCount, setRequestCount] = useState(0)
+
+useEffect(() => {
+  if (user?.role === 'employee' || user?.role === 'admin') {
+    fetchRequestCount()
+  }
+}, [user])
+
+const fetchRequestCount = async () => {
+  try {
+    const res = await getPendingRequestsCount()
+    setRequestCount(res.count)
+  } catch (error) {
+    console.error('Failed to fetch count')
+  }
+}
 
   // useEffect(() => {
   //   const handleResize = () => setIsMobile())
@@ -69,6 +87,13 @@ const Sidebar = ({ isOpen, onClose }) => {
   ]
 
   const employeeLinks = [
+     { 
+    to: "/employee/requests", 
+    icon: FaCalendarAlt, 
+    label: "Pending Requests", 
+    roles: ["employee"],
+    badge: requestCount  // Add badge count
+  },
     { to: "/visitors", icon: FaUsers, label: "Visitors", roles: ["employee"] },
     { to: "/appointments", icon: FaCalendarAlt, label: "Appointments", roles: ["employee"] },
     { to: "/passes", icon: FaPassport, label: "Passes", roles: ["employee"] },
@@ -128,7 +153,7 @@ const Sidebar = ({ isOpen, onClose }) => {
       )}
 
       <aside
-        id="sidebar"
+        // id="sidebar"
         className={`
           fixed left-0 lg:top-0 top-16 bottom-0 z-50 w-72 bg-white shadow-xl
           flex flex-col overflow-y-auto
@@ -159,7 +184,8 @@ const Sidebar = ({ isOpen, onClose }) => {
         </div>
 
         <div className="p-6 border-b border-[#eef2f6]">
-          <div className={` flex ${user?.role === "visitor" ? `flex-col gap-1` : `space-x-3`} items-center`}>
+          <div className={` flex items-center space-x-3`}>
+          {/* <div className={` flex ${user?.role === "visitor" ? `flex-col gap-1 items-center` : `space-x-3`} items-center`}> */}
             <div className="p-2.5 rounded-xl bg-[#cbddff] border-2 border-white shadow-sm flex items-center justify-center">
               {/* {user?.role === "admin" ? <FaUserTie size={25} /> : <FaUser size={19} />} */}
               {user?.role === "admin" ? (
@@ -176,7 +202,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             </div>
             <div className="flex-1">
               <p className="text-sm font-semibold text-[#0b1e3c]">{user?.name}</p>
-              <p className="text-xs text-[#5b6f87] mb-1.5">{user?.email}</p>
+              <p className={`text-xs text-[#5b6f87] mb-1.5 ${user?.role === "visitor" ? "text-[10px]" : ""}`}>{user?.email}</p>
             </div>
             <div className="mr-4">
               <span className={`flex items-center gap-1 text-xs px-1 py-1 rounded-lg font-medium ${getRoleBadge()}`}>

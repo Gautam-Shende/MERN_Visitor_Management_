@@ -27,7 +27,6 @@ const Profile = () => {
   // console.log("Profile component mounted, user data:", user);
   
   const getRoleBadge = () => {
-    // console.log("Getting role badge for role:", user?.role);
     const roleColors = {
       admin: 'bg-[#e8f0fe] text-[#2463eb] border border-[#b8d1fc]',
       employee: 'bg-[#e6f7ee] text-[#0b8a4f] border border-[#b0e3cd]',
@@ -38,7 +37,6 @@ const Profile = () => {
   };
 
   const formatDate = (date) => {
-    // console.log("Formatting date:", date);
     if (!date) return 'N/A';
     return new Date(date).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -61,19 +59,19 @@ const Profile = () => {
           <Card className="text-center">
             <div className="flex flex-col items-center">
               <div className="relative mb-4">
-                {/* {user?.photo ? (
+                {user?.photo ? (
                   <img 
                     src={user.photo} 
                     alt={user?.name} 
                     className="w-28 h-28 rounded-2xl object-cover border-4 border-white shadow-lg"
                   />
-                ) : ( */}
+                ) : (
                   <div className="w-28 h-28 rounded-2xl bg-[#2463eb] flex items-center justify-center shadow-lg">
                     <span className="text-white text-4xl font-bold">
                       {user?.name?.charAt(0).toUpperCase()}
                     </span>
                   </div>
-                {/* )} */}
+                 )} 
               </div>
 
               <h2 className="text-xl font-bold text-[#0b1e3c] mb-1">{user?.name}</h2>
