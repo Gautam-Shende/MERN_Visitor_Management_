@@ -16,7 +16,6 @@ import Visitors from "./pages/visitors/Visitors"
 // import VisitorForm from "./pages/visitors/VisitorForm"
 import VisitorDetails from "./pages/visitors/VisitorDetails"
 //
-import PendingRequests from './pages/appointments/PendingRequests'
 import Appointments from "./pages/appointments/Appointments"
 import AppointmentForm from "./pages/appointments/AppointmentForm"
 import AppointmentDetails from "./pages/appointments/AppointmentDetails"
@@ -66,8 +65,6 @@ function AppContent() {
             <Route path="/appointments" element={<ProtectedRoute allowedRoles={["admin", "employee"]}><Appointments /></ProtectedRoute>} />
             <Route path="/appointments/:id" element={<ProtectedRoute allowedRoles={["admin", "employee"]}><AppointmentDetails /></ProtectedRoute>} />
             <Route path="/appointments/new" element={<ProtectedRoute allowedRoles={["employee"]}><AppointmentForm /></ProtectedRoute>} />
-            <Route  path="/employee/requests"  element={<ProtectedRoute allowedRoles={["employee", "admin"]}><PendingRequests /></ProtectedRoute> } />
-            
             <Route path="/passes" element={<ProtectedRoute allowedRoles={["admin", "employee", "security"]}><Passes /></ProtectedRoute>} />
             <Route path="/passes/:id" element={<ProtectedRoute allowedRoles={["admin", "employee", "security"]}><PassDetails /></ProtectedRoute>} />
             

@@ -85,27 +85,3 @@ export const getVisitorPass = async (appointmentId) => {
     throw err;
   }
 };
-
-
-// Visitor submits appointment request
-export const requestAppointment = async (requestData) => {
-  try {
-    const response = await api.post('/visitor/appointments/request', requestData)
-    return response.data
-  } catch (err) {
-    console.error("Error requesting appointment:", err)
-    throw err
-  }
-}
-
-
-// Visitor gets their appointment requests
-export const getMyAppointmentRequests = async () => {
-  try {
-    const response = await api.get('/visitor/appointments/requests')
-    return response.data
-  } catch (err) {
-    console.error("Error fetching requests:", err)
-    return { success: true, data: [] }
-  }
-}

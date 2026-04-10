@@ -23,9 +23,6 @@ This is the frontend of the Visitor Management System built using React (Vite). 
 * Axios
 * React Router DOM
 * React Icons
-* React Toast Notifications
-* React Charts
-* React QR Reader
 
 ---
 
@@ -36,6 +33,8 @@ src/
 │── pages/           # Application pages
 │── context/         # Global state
 │── services/        # API calls
+│── hooks/           # Custom hooks
+│── utils/           # Utility functions
 │── App.jsx
 │── main.jsx
 
@@ -61,7 +60,11 @@ src/
 
 ## Environment Variables
 
-VITE_API_URL=https://mern-visitor-managment-backend.onrender.com/api
+VITE_API_URL=http://localhost:5000/api
+
+(Replace with deployed backend URL in production)
+
+---
 
 ## API Integration
 
@@ -72,6 +75,7 @@ Example:
 GET /api/visitors → Fetch all visitors
 POST /api/auth/login → Login user
 
+---
 
 ## Pages Overview
 
@@ -82,34 +86,33 @@ POST /api/auth/login → Login user
 * Add Visitor → Create new visitor
 * Search → Filter visitors
 
+---
+
+## Build for Production
+
+To create production build:
+
+npm run build
+
+---
+
 ## Deployment
 
 Frontend is deployed on Netlify.
 
-Live URL:https://mern-visitor-management-frontend.onrender.com
+Live URL:
+https://your-frontend-url.netlify.app
 
-## 📸 Screenshots
+---
 
-### 1. Visitor Registration
-![Registration](./screenshots/1-register.png)
+## Notes
 
-### 2. Appointment Booking
-![Appointment](./screenshots/2-appointment.png)
+* Backend must be running for frontend to work
+* Update API base URL in `.env` for production
+* Keep code clean and remove unused files
 
-### 3. QR Code Generation
-![QR Code](./screenshots/3-qr-code.png)
+---
 
-### 4. QR Scanning
-![Scanning](./screenshots/4-scanning.png)
+## Author
 
-### 5. PDF Badge
-![PDF Badge](./screenshots/5-pdf.png)
-
-### 6. Admin Dashboard
-![Dashboard](./screenshots/6-dashboard.png)
-
-### 7. Check-in Successful
-![Check-in](./screenshots/7-checkin.png)
-
-### 8. Email Notification
-![Email](./screenshots/8-email.png)
+Gautam
