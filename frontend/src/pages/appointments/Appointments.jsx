@@ -385,13 +385,13 @@ const Appointments = () => {
           <Button variant="secondary" size="md" onClick={loadAppointments}>
             <FaSyncAlt className="mr-2" size={14} /> Refresh
           </Button>
-          {(user?.role === "employee") && (
+          {/* {(user?.role === "employee") && (
             <Link to="/appointments/new">
               <Button variant="primary" size="md">
                 <FaPlus className="mr-2" size={14} /> New Appointment
               </Button>
             </Link>
-          )}
+          )} */}
         </div>
       </div>
 
