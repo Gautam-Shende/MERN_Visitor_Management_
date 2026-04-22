@@ -16,6 +16,7 @@ import visitorAuthRoutes from "./src/routes/visitorAuthRoutes.js"
 
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { HTTP_STATUS, MESSAGES } from "./constants.js"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,16 +25,19 @@ dotenv.config()
 
 const app = express()
 
-// Middleware
-app.use(cors())
+// app.use(cors())
+app.use(cors({
+  origin: "https://mern-visitor-management-client-frontend.onrender.com", 
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}))
+
 app.use(express.json())
 
-// Connect to Database
 connectDB()
 
 app.use('/uploads', express.static(path.join(__dirname, 'src', 'uploads')));
 
-// Routes (all routes already have /api prefix in their files)
 app.use("/", authRoutes)
 app.use("/", visitorAuthRoutes)
 app.use("/", appointmentRoutes)
@@ -44,20 +48,18 @@ app.use("/", reportRoutes)
 app.use("/", exportRoutes)
 app.use("/", userRoutes)
 
-// 404 Handler for undefined routes
 app.use((req, res) => {
-  res.status(404).json({ error: `Route ${req.originalUrl} not found` })
+  res.status(HTTP_STATUS.BAD_REQUEST).json({ error: `Route ${req.originalUrl} not found` })
 })
 
-// Global Error Handler
 app.use((err, req, res, next) => {
   console.error("Server Error:", err.message)
-  res.status(500).json({ error: "Internal server error" })
+  res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: MESSAGES.SERVER_ERROR })
 })
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 4000
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`)
-  console.log(`📁 Environment: ${process.env.NODE_ENV || "development"}`)
+  console.log(`Server running on port ${PORT}`)
+  console.log(`Environment: ${process.env.NODE_ENV || "development"}`)
 })
