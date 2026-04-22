@@ -1,0 +1,703 @@
+{
+  "info": {
+    "_postman_id": "7d5845c7-d0c5-4232-a8ad-81b63f574073",
+    "name": "MERN_Visitor_Management_System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "44590472"
+  },
+  "item": [
+    {
+      "name": "01. Authentication",
+      "item": [
+        {
+          "name": "Staff Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@mail.com\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Visitor Registration",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "Test Visitor", "type": "text" },
+                { "key": "email", "value": "test@visitor.com", "type": "text" },
+                { "key": "phone", "value": "9876543210", "type": "text" },
+                { "key": "purpose", "value": "Meeting", "type": "text" },
+                { "key": "password", "value": "visitor123", "type": "text" }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/visitor/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "visitor", "register"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Visitor Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@visitor.com\",\n  \"password\": \"visitor123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/visitor/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "visitor", "login"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "02. Visitor Appointments & Dashboard",
+      "item": [
+        {
+          "name": "Get Visitor Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{visitorToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/visitor/dashboard",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "visitor", "dashboard"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Visitor Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{visitorToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/visitor/profile",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "visitor", "profile"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Appointments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{visitorToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/visitor/appointments",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "visitor", "appointments"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Request New Appointment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{visitorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"preferredDate\": \"2025-12-25T10:30:00.000Z\",\n  \"purpose\": \"Job Interview\",\n  \"message\": \"I would like to meet the HR manager\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/visitor/appointments/request",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "visitor", "appointments", "request"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Passes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{visitorToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/visitor/passes",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "visitor", "passes"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Pass By Appointment ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{visitorToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/visitor/pass/{{appointmentId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "visitor", "pass", "{{appointmentId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "03. Staff Appointments",
+      "item": [
+        {
+          "name": "Get All Appointments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/appointments",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "appointments"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Appointment By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/appointments/{{appointmentId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "appointments", "{{appointmentId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Requested Appointments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employeeToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/appointments/requested",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "appointments", "requested"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Convert Request to Appointment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employeeToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"date\": \"2025-01-20T10:30:00.000Z\",\n  \"hostId\": \"{{hostId}}\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/appointments/{{appointmentId}}/convert",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "appointments", "{{appointmentId}}", "convert"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Approve Appointment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/appointments/approve/{{appointmentId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "appointments", "approve", "{{appointmentId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reject Appointment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/appointments/reject/{{appointmentId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "appointments", "reject", "{{appointmentId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "04. Pass Management",
+      "item": [
+        {
+          "name": "Get All Passes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/pass",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "pass"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Pass By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/pass/{{passId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "pass", "{{passId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Pass",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/pass/{{appointmentId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "pass", "{{appointmentId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "05. QR Scanning (Security)",
+      "item": [
+        {
+          "name": "Scan QR - Check In",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{securityToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"qrData\": \"PASS:{{passId}}\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/pass/scan",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "pass", "scan"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Scan QR - Check Out",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{securityToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"qrData\": \"PASS:{{passId}}\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/pass/scan",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "pass", "scan"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Check Logs by Pass ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/pass/{{passId}}/checklogs",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "pass", "{{passId}}", "checklogs"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "06. Visitors Management",
+      "item": [
+        {
+          "name": "Get All Visitors",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/visitors",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "visitors"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Visitor By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/visitors/{{visitorId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "visitors", "{{visitorId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "07. Admin Dashboard & Reports",
+      "item": [
+        {
+          "name": "Get Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/dashboard",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "dashboard"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Visitor Report",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/reports/visitors?status=approved",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "reports", "visitors"],
+              "query": [
+                { "key": "status", "value": "approved" },
+                { "key": "name", "value": "", "disabled": true },
+                { "key": "phone", "value": "", "disabled": true },
+                { "key": "type", "value": "", "disabled": true }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Export Visitor Data - CSV",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/export/csv/{{visitorId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "export", "csv", "{{visitorId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Export Visitor Data - Excel",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/export/excel/{{visitorId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "export", "excel", "{{visitorId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "08. Users Management",
+      "item": [
+        {
+          "name": "Get All Staff Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "users"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "employeeToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "securityToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "visitorToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "appointmentId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "passId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "visitorId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "hostId",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
