@@ -1,6 +1,7 @@
 
 import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
+
 import connectDB from "../config/database/db.js";
 import User from "../models/User.js";
 import Visitor from "../models/Visitor.js";
@@ -59,7 +60,7 @@ const seedDatabase = async () => {
       Visitor.deleteMany(),
     ])
 
-    console.log("🧹 Old users and visitors cleared");
+    // console.log("Old users and visitors cleared");
 
     const preparedUsers = await Promise.all(
       users.map(async (u) => ({
@@ -81,29 +82,29 @@ const seedDatabase = async () => {
     ])
 
     
-    console.log("\n✅ Users Seeded:");
+    // console.log("\n Users Seeded:");
     createdUsers.forEach((user) => {
-      console.log(`   • ${user.name} (${user.email}) [${user.role}]`);
+      // console.log(`• ${user.name} (${user.email}) [${user.role}]`);
     })
 
-    console.log("\n✅ Visitors Seeded:");
+    // console.log("\n Visitors Seeded:");
     createdVisitors.forEach((visitor) => {
-      console.log(
-        `   • ${visitor.name} (${visitor.email}) | Phone: ${visitor.phone}`
-      )
+      // console.log(
+      //   ` • ${visitor.name} (${visitor.email}) | Phone: ${visitor.phone}`
+      // )
     })
 
-    console.log("\n🔐 Test Credentials:");
-    console.log("   Admin    → admin@mail.com / admin123");
-    console.log("   Employee → employee@mail.com / employee123");
-    console.log("   Security → security@mail.com / security123");
-    console.log("   Visitor  → rahul@mail.com / rahul123");
+    // console.log("\n Test Credentials:");
+    // console.log("   Admin    → admin@mail.com / admin123");
+    // console.log("   Employee → employee@mail.com / employee123");
+    // console.log("   Security → security@mail.com / security123");
+    // console.log("   Visitor  → rahul@mail.com / rahul123");
 
-    console.log("\n🎉 Seeding completed successfully");
+    // console.log("\n Seeding completed successfully");
 
     process.exit(0);
   } catch (err) {
-    console.error("\n❌ Seeding failed:", err);
+    console.error("\n Seeding failed:", err);
     process.exit(1);
   }
 }

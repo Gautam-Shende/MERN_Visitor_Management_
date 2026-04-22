@@ -10,6 +10,7 @@ export const checkOutTemplate = (data) => {
     "📅 Check-out Date": data.checkOutDate,
     "⏰ Check-out Time": data.checkOutTime,
     "⏱️ Total Duration": data.duration,
+    // "📍 Location": "Main Entrance"
     "📍 Location": data.location || "Main Entrance"
   }
   
@@ -20,9 +21,11 @@ export const checkOutTemplate = (data) => {
     name: data.visitorName,
     mainMessage: "Thank you for your visit! You have successfully checked out.",
     detailsBlock: createDetailsBlock(details),
+    
     buttonText: "View Visit Summary",
     buttonLink: `${data.frontendUrl}/visitor/history`,
     buttonColor: "#FF9800",
+    
     companyName: data.companyName,
     footerNote: "We hope you had a great experience. Visit again soon!"
   }

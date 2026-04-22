@@ -1,3 +1,5 @@
+
+
 import { baseTemplate, createDetailsBlock } from "./baseTemplate.js"
 
 export const securityAlertTemplate = (data) => {
@@ -17,9 +19,11 @@ export const securityAlertTemplate = (data) => {
     name: "Security Team",
     mainMessage: `🚨 Security alert triggered for ${data.visitorName}. Immediate attention required!`,
     detailsBlock: createDetailsBlock(details),
+    
     buttonText: "View Details",
-    buttonLink: `${data.frontendUrl}/admin/security`,
+    buttonLink: `${data.frontendUrl}/visitor/login`,
     buttonColor: "#f44336",
+    
     companyName: data.companyName,
     footerNote: "Please investigate immediately. This is an automated security alert."
   }

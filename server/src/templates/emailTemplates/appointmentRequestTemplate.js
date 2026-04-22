@@ -5,6 +5,7 @@ export const appointmentRequestTemplate = (data) => {
     "🆔 Appointment ID": data.id,
     "📅 Requested Date": data.requestedDate,
     "⏰ Requested Time": data.requestedTime,
+    // "📍 Location": "Main Office",
     "📍 Location": data.location || "Main Office",
     "👤 Host": data.hostName || "To be assigned",
     "🏷️ Status": "Pending Approval",
@@ -18,9 +19,11 @@ export const appointmentRequestTemplate = (data) => {
     name: data.visitorName,
     mainMessage: "Your appointment request has been successfully created. Please wait for admin approval.",
     detailsBlock: createDetailsBlock(details),
+   
     buttonText: "Track Appointment",
     buttonLink: `${data.frontendUrl}/visitor/login`,
     buttonColor: "#2196F3",
+   
     companyName: data.companyName,
     footerNote: "You will receive an email once your appointment is approved or rejected."
   }

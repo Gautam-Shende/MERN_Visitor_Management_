@@ -1,6 +1,9 @@
-import { baseTemplate, createDetailsBlock } from "./baseTemplate.js"
+
+import { baseTemplate, 
+  createDetailsBlock } from "./baseTemplate.js"
 
 export const appointmentRejectionTemplate = (data) => {
+  
   const details = {
     "❌ Status": "Declined",
     "📅 Requested Date": data.requestedDate,
@@ -15,9 +18,11 @@ export const appointmentRejectionTemplate = (data) => {
     name: data.visitorName,
     mainMessage: "We regret to inform you that your appointment has been declined.",
     detailsBlock: createDetailsBlock(details),
+    
     buttonText: "Book New Appointment",
     buttonLink: `${data.frontendUrl}/visitor/login`,
     buttonColor: "#FF9800",
+    
     companyName: data.companyName,
     footerNote: "Sorry for the inconvenience. Please try another time slot."
   }

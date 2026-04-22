@@ -16,9 +16,11 @@ export const registrationTemplate = (data) => {
     name: data.name,
     mainMessage: "Thank you for registering! Your account has been created successfully.",
     detailsBlock: createDetailsBlock(details),
+   
     buttonText: "Login to Dashboard",
     buttonLink: `${data.frontendUrl}/visitor/login`,
     buttonColor: "#4CAF50",
+   
     companyName: data.companyName,
     footerNote: "Please wait for admin approval. You'll receive another email once approved."
   }

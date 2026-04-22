@@ -27,9 +27,11 @@ export const passGeneratedTemplate = (data) => {
     name: data.visitorName,
     mainMessage: "Your access pass has been generated successfully. Please find the details below:",
     detailsBlock: createDetailsBlock(details) + qrSection,
+    
     buttonText: "Download Pass",
     buttonLink: data.downloadUrl || `${data.frontendUrl}/visitor/passes`,
     buttonColor: "#9C27B0",
+    
     companyName: data.companyName,
     footerNote: "Please show this pass at the entrance. This pass is valid for one-time entry."
   }
