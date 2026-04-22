@@ -27,8 +27,7 @@ const app = express()
 
 // app.use(cors())
 app.use(cors({
-  origin: "https://mern-visitor-management-client-frontend.onrender.com", 
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: process.env.FRONTEND_URL, 
   credentials: true
 }))
 
