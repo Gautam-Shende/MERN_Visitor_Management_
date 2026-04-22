@@ -6,7 +6,7 @@ A complete visitor management system that I built to replace paper-based logbook
 
 **Backend API:** [https://mern-visitor-managment-backend.onrender.com](https://mern-visitor-management-client-frontend.onrender.com)
 
-**GitHub Repo:** [https://github.com/Gautam-Shende/MERN_Visitor_Management_](https://github.com/Gautam-Shende/MERN_Visitor_Management_)
+**GitHub Repo:** [https://github.com/Gautam-Shende/MERN_Visitor_Management_](https://github.com/Gautam-Shende/MERN_Visitor_Management_.git)
 
 ---
 
@@ -86,7 +86,7 @@ MERN_Visitor_Management/
 ## Local Setup
 
 ### 1. Clone the repository
-git clone <your-repo-link>
+git clone https://github.com/Gautam-Shende/MERN_Visitor_Management_.git
 
 ### 2. Backend setup
 
