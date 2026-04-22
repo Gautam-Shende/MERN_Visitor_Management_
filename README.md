@@ -1,39 +1,81 @@
-
 # Visitor Management System (MERN Stack)
 
-A full‑stack Visitor Management System built with the MERN stack (MongoDB, Express, React, Node.js).  
-Visitors can register, employees manage requests, and admins approve or reject access. The backend follows a clean, layered architecture (Controller → Service → Model) for maintainability and scalability.
+A complete visitor management system that I built to replace paper-based logbooks with a digital solution. Visitors can request appointments online, employees can schedule them, and security personnel can scan QR codes at the entrance. The whole system runs on the MERN stack.
 
-- Github repo - https://github.com/Gautam-Shende/MERN_Visitor_Management_
+**Live Demo:** [https://mern-visitor-management-frontend.onrender.com](https://mern-visitor-management-frontend.onrender.com)
 
-## Features
+**Backend API:** [https://mern-visitor-managment-backend.onrender.com](https://mern-visitor-managment-backend.onrender.com)
 
-- 🔐 JWT authentication (login / register)
-- 🎭 Role‑based access control (Admin, Employee, Visitor)
-- 📝 Visitor registration & self‑management
-- 🔍 Dedicated search API for visitors
-- 🔄 Separate endpoint to update visitor status
-- ✅ Input validation & error handling
-- 📱 Responsive UI with Tailwind CSS
+**GitHub Repo:** [https://github.com/Gautam-Shende/MERN_Visitor_Management_](https://github.com/Gautam-Shende/MERN_Visitor_Management_)
 
-## Tech Stack
+---
 
-**Frontend**  
-- React (Vite)  
-- Tailwind CSS  
-- Axios  
-- React Router DOM
-- React Scanner
-- React Charts
-- React Toast Notification
+## 📌 What This Project Does
 
-**Backend**  
-- Node.js  
-- Express.js  
-- MongoDB + Mongoose  
-- JSON Web Tokens (JWT)
-- EmailJs
-- Cloudinary
+I started this project because I saw how messy manual visitor registers can be. This system handles everything digitally - from the moment a visitor requests an appointment until they check out after their visit.
+
+**The main workflow goes like this:**
+
+A visitor registers online and requests an appointment with a preferred date. An employee reviews the request, schedules a specific time, and assigns a host. The admin approves it, and the system automatically generates a digital pass with a QR code. When the visitor arrives, security scans the QR code to check them in, and again when they leave.
+
+No paperwork, no confusion, everything tracked automatically.
+
+---
+
+## ✨ Features
+
+### For Visitors
+- Self-registration with profile photo upload
+- Request appointments with preferred date and time
+- Track appointment status (requested → pending → approved → rejected)
+- Download digital passes with QR codes
+- View complete visit history
+
+### For Employees
+- View all pending appointment requests
+- Schedule appointments with specific dates and hosts
+- Convert visitor requests into confirmed appointments
+- Manage visitors and generate passes after approval
+
+### For Admin
+- Complete dashboard with charts and statistics
+- View all visitors, appointments, and passes
+- Approve or reject any appointment
+- Generate and export reports (CSV/Excel)
+- Monitor check-in and check-out activity
+
+### For Security
+- Scan QR codes using device camera
+- Record check-in and check-out times automatically
+- Validate passes in real-time
+- View pass details instantly
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- React 18 with Vite (fast build times)
+- Tailwind CSS for styling (no separate CSS files to manage)
+- Axios for API calls with interceptors
+- React Router DOM for navigation and protected routes
+- Recharts for dashboard analytics
+- html5-qrcode for QR scanning
+- React Hot Toast for notifications
+
+### Backend
+- Node.js with Express
+- MongoDB with Mongoose ODM
+- JWT for authentication
+- Bcryptjs for password hashing
+- Cloudinary for storing photos, QR codes, and PDFs
+- Multer for handling file uploads
+- Nodemailer for email notifications
+- QRCode library for generating QR codes
+- html-pdf for generating pass PDFs
+- ExcelJS and json2csv for exports
+
+---
 
 ## Project Structure
 
