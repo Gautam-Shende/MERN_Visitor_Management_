@@ -2,9 +2,9 @@
 
 A complete visitor management system that I built to replace paper-based logbooks with a digital solution. Visitors can request appointments online, employees can schedule them, and security personnel can scan QR codes at the entrance. The whole system runs on the MERN stack.
 
-**Live Demo:** [https://mern-visitor-management-frontend.onrender.com](https://mern-visitor-management-client-frontend.onrender.com)
+**Live Demo:** [https://mern-visitor-management-client-frontend.onrender.com](https://mern-visitor-management-client-frontend.onrender.com)
 
-**Backend API:** [https://mern-visitor-managment-backend.onrender.com](https://mern-visitor-management-client-frontend.onrender.com)
+**Backend API:** [https://mern-visitor-management-server-backend.onrender.com/api](https://mern-visitor-management-client-frontend.onrender.com/api)
 
 **GitHub Repo:** [https://github.com/Gautam-Shende/MERN_Visitor_Management_](https://github.com/Gautam-Shende/MERN_Visitor_Management_.git)
 
