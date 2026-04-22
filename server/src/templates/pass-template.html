@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Visitor Pass</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 40px;
+            background: #f0f2f5;
+        }
+        .pass {
+            max-width: 550px;
+            margin: auto;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #1a237e 0%, #0d1b4a 100%);
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+        }
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .badge {
+            background: #4caf50;
+            display: inline-block;
+            padding: 5px 16px;
+            border-radius: 25px;
+            font-size: 11px;
+            margin-top: 10px;
+        }
+        .content {
+            padding: 25px;
+        }
+        .visitor-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #1a237e;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .info-row {
+            margin-bottom: 12px;
+            display: flex;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .label {
+            width: 85px;
+            font-weight: 600;
+            color: #555;
+            font-size: 14px;
+        }
+        .value {
+            flex: 1;
+            color: #333;
+            font-size: 14px;
+        }
+        .qr-section {
+            text-align: center;
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        .qr-section img {
+            width: 160px;
+            height: 160px;
+        }
+        .pass-id {
+            background: #f5f5f5;
+            padding: 12px;
+            text-align: center;
+            font-size: 11px;
+            border-radius: 8px;
+            word-break: break-all;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: center;
+            font-size: 11px;
+            color: #999;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="pass">
+        <div class="header">
+            <h1>{{company_name}}</h1>
+            <p>Digital Access Pass</p>
+            <span class="badge">VISITOR PASS</span>
+        </div>
+        
+        <div class="content">
+            <div class="visitor-name">{{visitor_name}}</div>
+            
+            <div class="info-row">
+                <div class="label">📧 Email</div>
+                <div class="value">{{visitor_email}}</div>
+            </div>
+            <div class="info-row">
+                <div class="label">📞 Phone</div>
+                <div class="value">{{visitor_phone}}</div>
+            </div>
+            <div class="info-row">
+                <div class="label">📅 Date</div>
+                <div class="value">{{visit_date}}</div>
+            </div>
+            <div class="info-row">
+                <div class="label">⏰ Time</div>
+                <div class="value">{{visit_time}}</div>
+            </div>
+            <div class="info-row">
+                <div class="label">👤 Host</div>
+                <div class="value">{{host_name}}</div>
+            </div>
+            
+            <div class="qr-section">
+                <img src="{{qr_code}}" alt="QR Code">
+                <p>Scan this QR code at the entrance</p>
+            </div>
+            
+            <div class="pass-id">
+                <strong>Pass ID:</strong> {{pass_id}}
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Valid for one-time entry • Please carry a valid ID proof</p>
+            <p>Generated: {{generated_date}}</p>
+        </div>
+    </div>
+</body>
+</html>
