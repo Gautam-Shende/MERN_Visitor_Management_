@@ -42,11 +42,11 @@ export const registerVisitor = async (req, res) => {
   const photo = req.file
   
   if (!name || !email || !password || !phone) {
-    return res.status(400).json({ error: "All fields required" })
+    return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: "All fields required" })
   }
   
   if (password.length < 6) {
-    return res.status(400).json({ error: "Password must be 6+ characters" })
+    return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: "Password must be 6+ characters" })
   }
   
   try {
@@ -54,7 +54,7 @@ export const registerVisitor = async (req, res) => {
       { name, email, password, phone, purpose },
       photo
     )
-    res.status(201).json({
+    res.status(HTTP_STATUS.CREATED).json({
       message: "Registration successful",
       token: result.token,
       visitor: result.visitor
@@ -63,9 +63,9 @@ export const registerVisitor = async (req, res) => {
     console.log("Registration error:", error.message)
     
     if (error.message === "Visitor already registered with this email") {
-      return res.status(409).json({ error: "Email already exists" })
+      return res.status(HTTP_STATUS.CONFLICT).json({ error: "Email already exists" })
     }
-    res.status(500).json({ error: "Server error" })
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: "Server error" })
   }
 }
 
