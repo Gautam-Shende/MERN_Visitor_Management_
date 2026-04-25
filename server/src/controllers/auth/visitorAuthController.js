@@ -1,5 +1,6 @@
 
 import * as visitorAuthService from "../../services/auth/visitorAuthService.js"
+import * as appointmentService from "../../services/appointment/appointmentService.js"  
 import { HTTP_STATUS, MESSAGES } from "../../../constants.js"
 
 // export const registerVisitor = async (req, res) => {
@@ -106,7 +107,7 @@ export const getVisitorProfile = async (req, res) => {
 
   try {
     const visitor = await visitorAuthService.getVisitorProfileService(visitorId)
-    return res.status(HTTP_STATUS.BAD_REQUEST).json(visitor);
+    return res.status(HTTP_STATUS.OK).json(visitor);
 
   } catch (err) {
     // console.log({ error: MESSAGES.SERVER_ERROR })

@@ -57,12 +57,17 @@ if (!form.email.trim()) {
 }
 
 // if (!form.phone) {
-if (!form.phone.trim()) {
-  newErrors.phone = "Phone number is required"
+// if (!form.phone.trim()) {
+//   newErrors.phone = "Phone number is required"
 
-} else if (!/^\d{10}$/.test(form.phone.replace(/\D/g, ""))) {
-  newErrors.phone = "Phone number must be 10 digits"
-}
+// } else if (!/^\d{10}$/.test(form.phone.replace(/\D/g, ""))) {
+//   newErrors.phone = "Phone number must be 10 digits"
+// }
+
+if (!form.phone.trim()) {
+    newErrors.phone = "Phone number is required"
+  }
+
 
 // if (!form.purpose) {
 //   newErrors.purpose = "Purpose of visit is required";
@@ -244,7 +249,6 @@ if (form.password !== form.confirmPassword) {
             </div>
           </div>
 
-          {/* Photo Upload - Full Width */}
           <div className="mt-3 pt-2 border-t border-gray-200">
             <label className="block text-xs font-medium text-gray-700 mb-1">
               Profile Photo (Optional)
