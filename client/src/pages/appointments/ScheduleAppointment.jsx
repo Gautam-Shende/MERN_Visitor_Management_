@@ -182,7 +182,7 @@ const ScheduleAppointment = () => {
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl overflow-hidden">
                   <FaEnvelope className="text-gray-400" size={14} />
                   <div>
                     <p className="text-xs text-gray-500">Email</p>
