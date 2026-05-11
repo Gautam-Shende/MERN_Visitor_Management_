@@ -29,12 +29,12 @@ const Navbar = ({ onMenuClick, isSidebarOpen }) => {
     navigate("/login");
   };
 
-  // ✅ Exact copy from PendingRequests.jsx
   const fetchRequests = async () => {
     try {
       const response = await fetchPendingRequests()
       
       let data = []
+      // use to fetch requested appointment proper Array type
       if (Array.isArray(response)) {
         data = response
       } else if (response?.data && Array.isArray(response.data)) {
@@ -43,34 +43,39 @@ const Navbar = ({ onMenuClick, isSidebarOpen }) => {
         data = response.requests
       }
       
-      const requestedOnly = data.filter(req => req.status === 'requested')
+      const requestedOnly = data.filter((req) => req.status === 'requested')
       setPendingRequests(requestedOnly.length)
-      
+      // console.log("This is the requested requests..",pendingRequests)
+
     } catch (error) {
-      console.error("Error fetching requests:", error)
+      // console.error("Error fetching requests:", error)
+      toast.error("Error fetching requests:", error)
       setPendingRequests(0)
     }
   }
 
-  // ✅ Exact copy from Appointments.jsx
   const fetchAppointmentsData = async () => {
     try {
       const response = await fetchAppointments()
       
       let data = []
+      // first convert response data to Array format
       if (Array.isArray(response)) {
         data = response
       } else if (response?.appointments && Array.isArray(response.appointments)) {
         data = response.appointments
-      } else if (response?.data && Array.isArray(response.data)) {
+      } 
+      else if (response?.data && Array.isArray(response.data)) {
         data = response.data
       }
       
-      const pendingOnly = data.filter(app => app.status === 'pending')
+      const pendingOnly = data.filter((appo) => appo.status === 'pending')
       setPendingAppointments(pendingOnly.length)
+      // console.log("This is the Pending Appointments",pendingAppointments)
       
     } catch (error) {
-      console.error("Error fetching appointments:", error)
+      // console.error("Error fetching appointments:", error)
+      toast.error("Error fetching appointments:", error)
       setPendingAppointments(0)
     }
   }

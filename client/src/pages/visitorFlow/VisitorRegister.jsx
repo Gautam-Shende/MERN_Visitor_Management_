@@ -37,7 +37,6 @@ const VisitorRegister = () => {
   const [errors, setErrors] = useState({})
   const navigate = useNavigate()
 
-  // sirf basic validation - baaki backend se aayega
   const validateForm = () => {
     const newErrors = {}
 

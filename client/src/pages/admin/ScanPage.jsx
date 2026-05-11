@@ -13,7 +13,6 @@ import {
 } from 'react-icons/fa'
 
 const ScanPage = () => {
-  // states
   const [scannerOn, setScannerOn] = useState(true)
   const [scanData, setScanData] = useState(null)
   
@@ -27,7 +26,6 @@ const ScanPage = () => {
   
   const [toastId, setToastId] = useState(null)
 
-  // refs
   const scannerRef = useRef(null)
   const scannerId = useRef(`scanner-${Date.now()}`)
   
@@ -36,7 +34,6 @@ const ScanPage = () => {
   const isAlive = useRef(true)
   const scanning = useRef(false)
 
-  // cleanup - ye important hai
   useEffect(() => {
     isAlive.current = true
     return () => {
@@ -46,7 +43,6 @@ const ScanPage = () => {
     }
   }, [toastId])
 
-  // get cameras - this code get access of camera. 
   useEffect(() => {
     const getCameras = async () => {
       try {
@@ -76,7 +72,6 @@ const ScanPage = () => {
         await scannerRef.current.stop()
         await scannerRef.current.clear()
       } catch (err) {
-        // ignore - no big deal
       }
       scannerRef.current = null
     }

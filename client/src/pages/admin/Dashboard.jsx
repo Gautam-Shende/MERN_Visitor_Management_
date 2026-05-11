@@ -19,7 +19,7 @@ import { Link } from 'react-router-dom'
 import {
   FaUserCheck, FaSignInAlt, FaSignOutAlt, FaCalendarCheck,
   FaArrowRight, FaClock, FaHourglassHalf, FaEye, FaCalendarAlt,
-  FaUsers, FaPassport, FaCheckCircle, FaTimesCircle,
+  FaUsers, FaPassport, FaCheckCircle
 } from 'react-icons/fa'  
 
 import {
@@ -29,14 +29,14 @@ import {
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null)
-  
+  // dashbaord stats stats..
   const [recentVisitors, setRecentVisitors] = useState([])
   const [recentAppointments, setRecentAppointments] = useState([])
   const [recentPasses, setRecentPasses] = useState([])
   
   // error , & loading stat
   const [loading, setLoading] = useState(true)
-  const [selectedPeriod, setSelectedPeriod] = useState('week')
+  // const [selectedPeriod, setSelectedPeriod] = useState('week')
 
   useEffect(() => {
     fetchDashboardData()
@@ -44,22 +44,26 @@ const Dashboard = () => {
 
   const fetchDashboardData = async () => {
     try {
-      const [statsData, visitorsData, appointmentsData, passesData] = await Promise.all([
-        // this is fetch all data
-        fetchDashboardStats(),
-        fetchRecentVisitors(10),
-        fetchAppointments(),
-        fetchPasses(),
-      ])
-      setStats(statsData)
-      setRecentVisitors(visitorsData)
-      setRecentAppointments(Array.isArray(appointmentsData) ? appointmentsData.slice(0, 5) : [])
-      setRecentPasses(Array.isArray(passesData) ? passesData.slice(0, 5) : [])
+       // Dshboard stats fetched from backend
+       const statsData = await fetchDashboardStats()
+        setStats(statsData)
+       
+        // Visitor stats fetched
+        const visitorsData = await fetchRecentVisitors(10)
+        setRecentVisitors(visitorsData)
+    
+        // Appointments data fetched from backend
+        const appointmentsData = await fetchAppointments()
+        setRecentAppointments(appointmentsData?.slice(0, 5) || []) // newst five showing
+    
+       const passesData = await fetchPasses()
+       setRecentPasses(passesData?.slice(0, 5) || [])
       
       // console.log(setRecentAppointments(visitorsData))
     } catch (error) {
       // console.error('Dashboard fetch error:', error)
-      toast.error(error)
+      // toast.error(error)
+      toast.error(error?.message || 'Failed to load dashboard')
     } finally {
       setLoading(false)
     }
@@ -74,7 +78,7 @@ const Dashboard = () => {
     { day: 'Sat', checkIns: 8,  appointments: 8 },
     { day: 'Sun', checkIns: 3,  appointments: 4 },
   ]
-
+ 
   const todayAnalytics = stats ? [
     { name:'Visitors', value: stats.visitors?.today || 0, color: '#3b82f6' },
     { name:'Appointments',value: stats.appointments?.today || 0,color: '#10b981' },
@@ -215,14 +219,14 @@ const Dashboard = () => {
   ]
 
   const summaryCards = [
-    { title: 'Total Visitors',          value: stats?.visitors?.total || 0,           icon: FaUsers,        color: 'bg-blue-500' },
-    { title: 'Total Appointments',      value: stats?.appointments?.total || 0,       icon: FaCalendarAlt,  color: 'bg-indigo-500' },
-    { title: 'Total Passes',            value: stats?.passes?.total || 0,             icon: FaPassport,     color: 'bg-purple-500' },
-    { title: 'Total Check-ins',         value: stats?.checkLogs?.totalCheckIns || 0,  icon: FaSignInAlt,    color: 'bg-green-500' },
-    { title: 'Total Check-outs',        value: stats?.checkLogs?.totalCheckOuts || 0, icon: FaSignOutAlt,   color: 'bg-orange-600' },
-    { title: 'Currently Inside',        value: stats?.checkLogs?.currentlyInside || 0,icon: FaUserCheck,    color: 'bg-emerald-500' },
-    { title: 'Pending Approvals',       value: stats?.visitors?.pending || 0,         icon: FaHourglassHalf,color: 'bg-yellow-500' },
-    { title: 'Approved Appointments',   value: stats?.visitors?.approved || 0,        icon: FaCheckCircle,  color: 'bg-green-600' },
+    { title: 'Total Visitors',value: stats?.visitors?.total || 0, icon: FaUsers,color: 'bg-blue-500' },
+    { title: 'Total Appointments',value: stats?.appointments?.total || 0, icon: FaCalendarAlt,color: 'bg-indigo-500' },
+    { title: 'Total Passes', value: stats?.passes?.total || 0, icon: FaPassport,color: 'bg-purple-500' },
+    { title: 'Total Check-ins',value: stats?.checkLogs?.totalCheckIns || 0, icon: FaSignInAlt, color: 'bg-green-500' },
+    { title: 'Total Check-outs',value: stats?.checkLogs?.totalCheckOuts || 0, icon: FaSignOutAlt,color: 'bg-orange-600' },
+    { title: 'Currently Inside', value: stats?.checkLogs?.currentlyInside || 0,icon: FaUserCheck,color: 'bg-emerald-500' },
+    { title: 'Pending Approvals',value: stats?.visitors?.pending || 0,icon: FaHourglassHalf,color: 'bg-yellow-500' },
+    { title: 'Approved Appointments',value: stats?.visitors?.approved || 0, icon: FaCheckCircle,color: 'bg-green-600' },
   ]
 
   if (loading) {
@@ -245,7 +249,7 @@ const Dashboard = () => {
           <div className="bg-white px-4 py-2 rounded-lg shadow-sm">
             <p className="text-sm text-gray-500">Current Date</p>
             <p className="font-semibold text-gray-800">
-              <DateTimeFormat date={new Date()} type="date" format="long" showIcon={false} />
+              <DateTimeFormat date={new Date()} type="date" format="long" showIcon={true} />
             </p>
           </div>
           {/* <div className="bg-white px-4 py-2 rounded-lg shadow-sm">
@@ -257,7 +261,7 @@ const Dashboard = () => {
           <div className="bg-white px-4 py-2 rounded-lg shadow-sm">
             <p className="text-sm text-gray-500">Current Time</p>
             <p className="font-semibold text-gray-800">
-              <DateTimeFormat date={new Date()} type="time" format="long" showIcon={false} />
+              <DateTimeFormat date={new Date()} type="time" format="long" showIcon={true} />
             </p>
           </div>
         </div>
@@ -314,8 +318,8 @@ const Dashboard = () => {
             </div>
             <select
               className="text-sm border rounded-lg px-3 py-2 bg-gray-50"
-              value={selectedPeriod}
-              onChange={(e) => setSelectedPeriod(e.target.value)}
+              // value={selectedPeriod}
+              // onChange={(e) => setSelectedPeriod(e.target.value)}
             >
               <option value="week">This Week</option>
               <option value="month">This Month</option>
