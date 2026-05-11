@@ -111,7 +111,7 @@ JWT_SECRET=your_secret_key
 
 **Frontend (`.env`)**  
 
-VITE_API_URL=https:https://mern-visitor-management-client-frontend.onrender.com
+VITE_API_URL=https://mern-visitor-management-server-backend.onrender.com/api
 
 ## 🚢 Deployment
 
@@ -130,15 +130,15 @@ VITE_API_URL=https:https://mern-visitor-management-client-frontend.onrender.com
 2. Root Directory: `client`
 3. Build Command: `npm run build`
 4. Publish Directory: `dist`
-5. Add env variable: `VITE_API_URL` = `https://mern-visitor-management-client-frontend.onrender.com/api`
+5. Add env variable: `VITE_API_URL` = `https://mern-visitor-management-server-backend.onrender.com/api`
 6. Click "Create Static Site"
 
 ### Live URLs
 
 | Service | URL |
 |---------|-----|
-| Frontend | https://mern-visitor-management-client-frontend.onrender.com |
-| Backend | https://mern-visitor-management-client-frontend.onrender.com |
+| Frontend | https://mern-visitor-management-frontend.vercel.app/login|
+| Backend | https://mern-visitor-management-client-frontend.onrender.com/api |
 
 ## API Documentation
 
