@@ -2,11 +2,13 @@
 
 A complete visitor management system that I built to replace paper-based logbooks with a digital solution. Visitors can request appointments online, employees can schedule them, and security personnel can scan QR codes at the entrance. The whole system runs on the MERN stack.
 
-**Live Demo:** [https://mern-visitor-management-client-frontend.onrender.com](https://mern-visitor-management-frontend.vercel.app/login)
+**Live Demo:** [https://mern-visitor-management-frontend.vercel.app/login](https://mern-visitor-management-frontend.vercel.app/login)
 
 **Backend API:** [https://mern-visitor-management-server-backend.onrender.com](https://mern-visitor-management-server-backend.onrender.com)
 
 **GitHub Repo:** [https://github.com/Gautam-Shende/MERN_Visitor_Management_](https://github.com/Gautam-Shende/MERN_Visitor_Management_.git)
+
+**Screenshots-of-this-projects working condition** - [Screentshots](./screenshots)
 
 ---
 
@@ -59,7 +61,7 @@ No paperwork, no confusion, everything tracked automatically.
 - Tailwind CSS for styling (no separate CSS files to manage)
 - Axios for API calls with interceptors
 - React Router DOM for navigation and protected routes
-- Recharts for dashboard analytics
+- Recharts for dashboard dynamic dashbaord analytics
 - html5-qrcode for QR scanning
 - React Hot Toast for notifications
 
@@ -109,7 +111,7 @@ JWT_SECRET=your_secret_key
 
 **Frontend (`.env`)**  
 
-VITE_API_URL=https:https://mern-visitor-management-client-frontend.onrender.com
+VITE_API_URL=https://mern-visitor-management-server-backend.onrender.com/api
 
 ## 🚢 Deployment
 
@@ -128,15 +130,15 @@ VITE_API_URL=https:https://mern-visitor-management-client-frontend.onrender.com
 2. Root Directory: `client`
 3. Build Command: `npm run build`
 4. Publish Directory: `dist`
-5. Add env variable: `VITE_API_URL` = `https://mern-visitor-management-client-frontend.onrender.com/api`
+5. Add env variable: `VITE_API_URL` = `https://mern-visitor-management-server-backend.onrender.com/api`
 6. Click "Create Static Site"
 
 ### Live URLs
 
 | Service | URL |
 |---------|-----|
-| Frontend | https://mern-visitor-management-client-frontend.onrender.com |
-| Backend | https://mern-visitor-management-client-frontend.onrender.com |
+| Frontend | https://mern-visitor-management-frontend.vercel.app/login|
+| Backend | https://mern-visitor-management-client-frontend.onrender.com/api |
 
 ## API Documentation
 
