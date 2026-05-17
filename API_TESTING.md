@@ -9,7 +9,7 @@ Set `Authorization: Bearer <token>` header for protected routes.
 
 ## Auth Endpoints
 
-### POST /api/auth/login ✅ Working
+### POST /api/auth/login 
 Login as admin, employee, or security user.
 
 **Body (JSON):**
@@ -25,7 +25,7 @@ Login as admin, employee, or security user.
 
 ## Visitor Auth Endpoints
 
-### POST /api/visitor/register ✅ Working
+### POST /api/visitor/register 
 Register a new visitor with photo upload.
 
 **Body (form-data):**
@@ -42,7 +42,7 @@ Register a new visitor with photo upload.
 
 ---
 
-### POST /api/visitor/login ✅ Working
+### POST /api/visitor/login 
 **Body (JSON):**
 ```json
 {
@@ -54,17 +54,17 @@ Register a new visitor with photo upload.
 
 ---
 
-### GET /api/visitor/profile ✅ Working
+### GET /api/visitor/profile 
 **Header:** `Authorization: Bearer <visitor_token>`
 
 ---
 
-### GET /api/visitor/dashboard ✅ Working
+### GET /api/visitor/dashboard 
 **Header:** `Authorization: Bearer <visitor_token>`
 
 ---
 
-### POST /api/visitor/appointments/request ✅ Working
+### POST /api/visitor/appointments/request 
 Visitor submits an appointment request.
 
 **Header:** `Authorization: Bearer <visitor_token>`
@@ -80,43 +80,43 @@ Visitor submits an appointment request.
 
 ---
 
-### GET /api/visitor/appointments ✅ Working
+### GET /api/visitor/appointments 
 **Header:** `Authorization: Bearer <visitor_token>`
 
 ---
 
-### GET /api/visitor/passes ✅ Working
+### GET /api/visitor/passes 
 **Header:** `Authorization: Bearer <visitor_token>`
 
 ---
 
 ## Appointment Endpoints (Admin/Employee)
 
-### GET /api/appointments ✅ Working
+### GET /api/appointments 
 **Header:** `Authorization: Bearer <admin_or_employee_token>`
 
 ---
 
-### GET /api/appointments/requested ✅ Working
+### GET /api/appointments/requested 
 Get all visitor-submitted appointment requests.
 
 **Header:** `Authorization: Bearer <admin_or_employee_token>`
 
 ---
 
-### GET /api/appointments/:id ✅ Working
+### GET /api/appointments/:id 
 **Header:** `Authorization: Bearer <token>`
 
 ---
 
-### PUT /api/appointments/approve/:id ✅ Working
+### PUT /api/appointments/approve/:id 
 Admin approves an appointment. Sends email to visitor.
 
 **Header:** `Authorization: Bearer <admin_token>`
 
 ---
 
-### PUT /api/appointments/reject/:id ✅ Working
+### PUT /api/appointments/reject/:id 
 **Header:** `Authorization: Bearer <admin_token>`
 
 **Body (JSON, optional):**
@@ -128,7 +128,7 @@ Admin approves an appointment. Sends email to visitor.
 
 ---
 
-### PUT /api/appointments/:id/convert ✅ Working
+### PUT /api/appointments/:id/convert 
 Employee converts a visitor request into a scheduled appointment.
 
 **Header:** `Authorization: Bearer <employee_token>`
@@ -145,7 +145,7 @@ Employee converts a visitor request into a scheduled appointment.
 
 ## Pass Endpoints (Admin/Security)
 
-### POST /api/passes/generate/:appointmentId ✅ Working
+### POST /api/passes/generate/:appointmentId 
 Generate a QR pass for an approved appointment.
 Appointment must have status = "approved".
 
@@ -153,17 +153,17 @@ Appointment must have status = "approved".
 
 ---
 
-### GET /api/passes ✅ Working
+### GET /api/passes 
 **Header:** `Authorization: Bearer <admin_or_security_token>`
 
 ---
 
-### GET /api/passes/:id ✅ Working
+### GET /api/passes/:id 
 **Header:** `Authorization: Bearer <token>`
 
 ---
 
-### POST /api/passes/scan ✅ Working
+### POST /api/passes/scan 
 Security scans a visitor QR code. Handles check-in and check-out automatically.
 
 **Header:** `Authorization: Bearer <security_token>`
@@ -180,7 +180,7 @@ First scan = check-in. Second scan = check-out and pass expires.
 
 ## Dashboard & Reports
 
-### GET /api/admin/dashboard ✅ Working
+### GET /api/admin/dashboard 
 **Header:** `Authorization: Bearer <admin_token>`
 
 ---
