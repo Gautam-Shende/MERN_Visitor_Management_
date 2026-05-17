@@ -17,3 +17,18 @@ export const loginUser = async (req, res) => {
     return res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: MESSAGES.LOGIN_FAILED })
   }
 }
+
+export const getMe = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select('-password')
+
+    if (!user) {
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ message: MESSAGES.USER_NOT_FOUND })
+    }
+
+    return res.status(HTTP_STATUS.OK).json({ user })
+  } catch (err) {
+    console.error('getMe error:', err.message)
+    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: MESSAGES.SERVER_ERROR })
+  }
+}

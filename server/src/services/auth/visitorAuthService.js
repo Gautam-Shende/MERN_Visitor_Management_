@@ -87,7 +87,6 @@ export const requestAppointmentService = async ({ visitorId, preferredDate, purp
   const reqDate = new Date(preferredDate)
   if (reqDate < new Date()) throw new Error("Date must be in the future")
 
-  // ✅ Find visitor FIRST
   const visitor = await Visitor.findById(visitorId)
   if (!visitor) throw new Error("Visitor not found")
 
@@ -95,7 +94,6 @@ export const requestAppointmentService = async ({ visitorId, preferredDate, purp
   const already = await Appointment.findOne({ visitor: visitorId, status: "requested" })
   if (already) throw new Error("You already have a pending request")
 
-  // ✅ Create appointment
   const appointment = await Appointment.create({
     visitor: visitorId,
     preferredDate: reqDate,
@@ -107,11 +105,10 @@ export const requestAppointmentService = async ({ visitorId, preferredDate, purp
     host: null
   })
 
-  // ✅ UPDATE VISITOR STATUS TO "requested"
   visitor.status = "requested"
   await visitor.save()
 
-  console.log(`✅ Visitor ${visitor.email} status updated to: ${visitor.status}`)
+  // console.log(`${visitor.status}`)
 
   return appointment
 }

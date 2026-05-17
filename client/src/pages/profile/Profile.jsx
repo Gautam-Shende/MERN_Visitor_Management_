@@ -82,7 +82,7 @@ const Profile = () => {
                   {user?.role?.charAt(0).toUpperCase() + user?.role?.slice(1)}
               </span> */}
               <div className="mb-3">
-                <StatusBadge status={user?.role} type="role" size="md" />
+                <StatusBadge status={user?.role} />
               </div>
 
 

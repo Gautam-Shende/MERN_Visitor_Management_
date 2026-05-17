@@ -16,7 +16,9 @@ export const getVisitorAppointmentsService = async (visitorId) => {
 }
 
 export const getVisitorDashboardService = async (visitorId) => {
+  // fetching visitor appoi, Pass
   const appointments = await Appointment.find({ visitor: visitorId })
+
   const passes = await Pass.find({ visitor: visitorId })
 
   return {

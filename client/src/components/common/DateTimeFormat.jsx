@@ -7,7 +7,6 @@ const DateTimeFormat = ({
   date,
   type = 'datetime',
   format = 'short',
-  // showIcon = <FaClock/>,
   showIcon = true,
   iconSize = 12,
   className = '',
@@ -49,7 +48,7 @@ const DateTimeFormat = ({
     return (
       <div className={`flex items-center gap-1.5 ${className}`}>
         {showIcon && <FaCalendarAlt size={iconSize} className="text-gray-400" />}
-        <span className="text-sm text-gray-700">{StatusDate}</span>
+        <span className="text-gray-700">{StatusDate}</span>
       </div>
     )
   }
@@ -58,7 +57,7 @@ const DateTimeFormat = ({
     return (
       <div className={`flex items-center gap-1.5 ${className}`}>
         {showIcon && <FaClock size={iconSize} className="text-gray-400" />}
-        <span className="text-sm text-gray-700">{StatusTime}</span>
+        <span className="text-gray-700">{StatusTime}</span>
       </div>
     )
   }
@@ -66,12 +65,11 @@ const DateTimeFormat = ({
   return (
     <div className={`flex flex-col ${className}`}>
       <div className="flex items-center gap-1.5">
-        {/* {showIcon*/}
-        {/* {showIcon && <FaCalendarAlt size={iconSize} className="text-gray-400" />} */}
+        {showIcon && <FaCalendarAlt size={iconSize} className="text-gray-400" />}
         <span className="text-sm font-medium text-gray-800">{StatusDate}</span>
       </div>
       <div className="flex items-center gap-1.5 mt-0.5">
-        {/* {showIcon && <FaClock size={iconSize} className="text-gray-400" />} */}
+        {showIcon && <FaClock size={iconSize} className="text-gray-400" />}
         <span className="text-xs text-gray-500">{StatusTime}</span>
       </div>
     </div>

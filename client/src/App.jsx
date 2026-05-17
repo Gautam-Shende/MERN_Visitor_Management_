@@ -37,6 +37,8 @@ import VisitorAppointments from "./pages/visitorFlow/VisitorAppointments"
 import VisitorPasses from "./pages/visitorFlow/VisitorPasses"
 import VisitorPassDetails from "./pages/visitorFlow/VisitorPassDetails"
 
+import { Toaster } from "react-hot-toast";
+
 
 function AppContent() {
   const { user } = useAuth();
@@ -46,7 +48,9 @@ function AppContent() {
   const closeSidebar = () => setIsSidebarOpen(false);
 
   return (
+    
     <div className="flex h-screen bg-gray-50 overflow-hidden">
+      <Toaster position="top-right" reverseOrder={false} />
       {user && <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />}
       
       <div className="flex-1 flex flex-col overflow-hidden">

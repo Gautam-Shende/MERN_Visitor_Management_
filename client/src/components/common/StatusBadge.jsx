@@ -1,109 +1,96 @@
 
-import React from 'react'
+import React from "react"
+
 import {
-  FaRegClock,
-  FaHourglassHalf,
-  FaCheckCircle,
-  FaTimesCircle,
+  FaRegClock, FaHourglassHalf,
+  FaCheckCircle, FaTimesCircle,
   FaSignInAlt,
-  FaUserTie,
-  FaUserCheck,
-  FaShieldAlt,
-  FaUser
+  FaUserTie,FaUserCheck,
+  FaShieldAlt, FaUser
 } from 'react-icons/fa'
 
-const StatusBadge = ({
-  status,
-  type = 'appointment',
-  size = 'md',
-  showIcon = true,
-  className = ''
-}) => {
+// const StatusBadge = (status) => {
+const StatusBadge = ({ status }) => {
 
-
-  const iconMap = {
-    approved: <FaCheckCircle size={12} />,
-    active: <FaCheckCircle size={12} />,
-    pending: <FaHourglassHalf size={12} />,
-    requested: <FaRegClock size={12} />,
-    rejected: <FaTimesCircle size={12} />,
-    expired: <FaTimesCircle size={12} />,
-    inside: <FaSignInAlt size={12} />,
-
-    admin: <FaUserTie size={12} />,
-    employee: <FaUserCheck size={12} />,
-    security: <FaShieldAlt size={12} />,
-    visitor: <FaUser size={12} />
+  let bgColor;
+  let textColor;
+  let icon;
+  
+  // i added for the default requested status appointments
+  if(status === "requested") {
+     bgColor = "bg-yellow-50 ";
+     textColor = "text-yellow-700";
+     icon = <FaRegClock className="mr-1"/>;
   }
 
-  const icon = iconMap[status] || <FaRegClock size={12} />
-
-
-  const baseStyles = {
-    success: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    warning: 'bg-amber-50 text-amber-700 border-amber-200',
-    danger: 'bg-rose-50 text-rose-700 border-rose-200',
-    info: 'bg-blue-50 text-blue-700 border-blue-200',
-    neutral: 'bg-gray-50 text-gray-700 border-gray-200',
-    yellow: 'bg-yellow-50 text-yellow-700 border-yellow-200',
-
-    admin: 'bg-purple-50 text-purple-700 border-purple-200',
-    employee: 'bg-green-50 text-green-700 border-green-200',
-    security: 'bg-red-50 text-red-700 border-red-200',
-    visitorRole: 'bg-blue-50 text-blue-700 border-blue-200'
+  if (status === "approved") {
+    bgColor = "bg-green-100";
+    textColor = "text-green-700";
+    icon = <FaCheckCircle className="mr-1" />;
   }
 
-  const statusConfig = {
-    appointment: {
-      approved: { style: 'success', label: 'Approved' },
-      pending: { style: 'warning', label: 'Pending' },
-      rejected: { style: 'danger', label: 'Rejected' },
-      requested: { style: 'yellow', label: 'Request Sent' }
-    },
-    pass: {
-      active: { style: 'success', label: 'Active' },
-      inside: { style: 'info', label: 'Inside' },
-      expired: { style: 'neutral', label: 'Expired' }
-    },
-    visitor: {
-      approved: { style: 'success', label: 'Approved' },
-      pending: { style: 'warning', label: 'Pending' },
-      requested: { style: 'yellow', label: 'Requested' },
-      rejected: { style: 'danger', label: 'Rejected' }
-    },
-    role: {
-      admin: { style: 'admin', label: 'Admin' },
-      employee: { style: 'employee', label: 'Employee' },
-      security: { style: 'security', label: 'Security' },
-      visitor: { style: 'visitorRole', label: 'Visitor' }
-    }
+  if (status === "pending" ) {
+    bgColor = "bg-yellow-100";
+    textColor = "text-yellow-700";
+    icon = <FaHourglassHalf className="mr-1" />;
   }
 
-  const current =
-    statusConfig[type]?.[status] || {
-      style: 'neutral',
-      label: status || 'Unknown'
-    }
+  if (status === "rejected" ) {
+    bgColor = "bg-red-100";
+    textColor = "text-red-700";
+    icon = <FaTimesCircle className="mr-1" />;
+  }
 
-  const sizeMap = {
-    sm: 'px-2 py-0.5 text-xs gap-1',
-    md: 'px-2.5 py-1 text-xs gap-1.5',
-    lg: 'px-3 py-1.5 text-sm gap-1.5'
+  // for active pass STATUS "inside"
+  if (status === "active" ) {
+    bgColor = "bg-green-100";
+    textColor = "text-green-700";
+    icon = <FaCheckCircle className="mr-1" />;
+  }
+  if (status === "inside" ) {
+    bgColor = "bg-blue-100";
+    textColor = "text-blue-700";
+    icon = <FaSignInAlt className="mr-1" />;
+  }
+
+  if (status === "expired" ) {
+    bgColor = "bg-gray-200";
+    textColor = "text-gray-700";
+    icon = <FaTimesCircle className="mr-1" />;
+  }
+ 
+  // profile badge for users like admin, employee, security, visitor
+  if(status === "admin") {
+     bgColor = "bg-blue-100 ";
+     textColor = "text-blue-700";
+     icon = <FaUserTie className="mr-1"/>;
+  }
+
+  if (status === "employee") {
+    bgColor = "bg-green-100";
+    textColor = "text-green-700";
+    icon = <FaUserCheck className="mr-1" />;
+  }
+
+  if (status === "security" ) {
+    bgColor = "bg-orange-100";
+    textColor = "text-orange-700";
+    icon = <FaShieldAlt className="mr-1" />;
+  }
+
+  if (status === "visitor" ) {
+    bgColor = "bg-purple-200";
+    textColor = "text-purple-700";
+    icon = <FaUser className="mr-1" />;
   }
 
   return (
     <span
-      className={`
-        inline-flex items-center font-medium rounded-lg border
-        ${baseStyles[current.style]}
-        ${sizeMap[size]}
-        ${className}
-      `}
-    >
-      {showIcon && <span>{icon}</span>}
-      {current.label}
+      className={`px-3 py-1 rounded-full text-sm font-medium inline-flex items-center ${bgColor} ${textColor}`}>
+     {icon}
+      {status}
     </span>
-  )
-}
+  );
+};
 
-export default StatusBadge
+export default StatusBadge;

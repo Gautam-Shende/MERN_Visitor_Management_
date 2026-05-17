@@ -8,6 +8,7 @@ import {
   fetchVisitorDashboard,
   requestforAppointment,
 } from "../../services/visitorAuthService"
+
 import { useAuth } from "../../context/AuthContext"
 
 import Input from "../../components/common/Input"
@@ -27,6 +28,7 @@ import {
   FaHourglassHalf,
   FaTimesCircle,
   FaQrcode,
+  FaSignInAlt,
 } from "react-icons/fa"
 
 // required for form 
@@ -279,8 +281,8 @@ const VisitorDashboard = () => {
             <div className="grid grid-cols-2 gap-1">
               <StatItem icon={FaQrcode} label="Total" value={stats?.totalPasses} color="text-yellow-600" />
               <StatItem icon={FaCheckCircle} label="Active" value={stats?.activePasses} color="text-emerald-600" />
-              <StatItem icon={FaClock} label="Expired" value={stats?.expiredPasses} color="text-red-600" />
-              <StatItem icon={FaPassport} label="Inside" value={stats?.insidePasses} color="text-blue-800" />
+              <StatItem icon={FaTimes} label="Expired" value={stats?.expiredPasses} color="text-red-600" />
+              <StatItem icon={FaSignInAlt} label="Inside" value={stats?.insidePasses} color="text-blue-800" />
             </div>
           </Card>
 

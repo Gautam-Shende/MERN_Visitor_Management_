@@ -111,7 +111,7 @@ const Passes = () => {
       header: 'Status',
       accessor: 'status',
       sortable: true,
-      cell: (row) => <StatusBadge status={row.status} type="pass" size="sm" />,
+      cell: (row) => <StatusBadge status={row.status} />,
     },
     {
       header: 'QR Code',

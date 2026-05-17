@@ -24,6 +24,7 @@ import {
 
 import { useAuth } from '../../context/AuthContext';
 import toast from 'react-hot-toast'
+import DateTimeFormat from '../../components/common/DateTimeFormat'
 
 const Visitors = () => {
   const [visitors, setVisitors] = useState([])
@@ -107,13 +108,7 @@ const Visitors = () => {
       header: 'Visit Date',
       accessor: 'createdAt',
       cell: (row) => (
-        <span className="text-sm text-[#1e293b]">
-          {new Date(row.createdAt).toLocaleDateString('en-US', {
-            month: 'short',
-            day: 'numeric',
-            year: 'numeric'
-          })}
-        </span>
+        <DateTimeFormat iconSize={12} date={new Date()} type="datetime" showIcon={true} />
       ),
       sortable: true
     },

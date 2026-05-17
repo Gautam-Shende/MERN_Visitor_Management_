@@ -15,6 +15,19 @@ import { securityAlertTemplate } from "../templates/emailTemplates/securityAlert
 
 dotenv.config()
 
+// using .env files variables
+//   EMAIL_HOST=smtp.gmail.com
+//   EMAIL_PORT=587
+//   EMAIL_USER=gmail@gmail.com
+//   EMAIL_PASS=gmail-app-password  
+//   EMAIL_FROM=gmail@gmail.com
+
+// To create a Gmail App Password:
+//   1. first Go to Google Account > Security > 2-Step Verification
+//   2. Scroll down to "App passwords"
+//   3. Generate one for "Mail" and paste it in EMAIL_PASS
+
+
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST || "smtp.gmail.com",
   port: process.env.EMAIL_PORT || 587,
@@ -33,22 +46,24 @@ transporter.verify((error) => {
   }
 })
 
+// build nodemailer emailservice constructor data loading
 class EmailService {
   constructor() {
-    this.companyName = process.env.COMPANY_NAME || "Visitor Management System"
+    this.companyName =process.env.COMPANY_NAME || "Visitor Management System"
     this.frontendUrl = process.env.FRONTEND_URL || "http://localhost:4000"
-    this.fromEmail = process.env.EMAIL_FROM || process.env.EMAIL_USER
+    this.fromEmail =process.env.EMAIL_FROM || process.env.EMAIL_USER
   }
 
+  // default nodemailer sendemail funciton for sending messages
   async sendEmail(to, subject, html) {
     try {
       const info = await transporter.sendMail({
         from: `"${this.companyName}" <${this.fromEmail}>`,
-        to,
-        subject,
-        html,
+        to, // to user's mail
+        subject, // subject, message
+        html, // html template style data
       })
-      console.log(`Email sent to ${to}: ${info.messageId}`)
+      // console.log(`Email sent to ${to}: ${info.messageId}`)
       return { success: true, messageId: info.messageId }
     } catch (err) {
       // console.error("Email error:", err.message)
@@ -75,8 +90,8 @@ class EmailService {
     if (!checkInTime || !checkOutTime){
        return "N/A"
     }
-
-    // some error handled for checin,checkout.
+   
+    // the calculation fo diffrence btwn check in checkouts
     const diffMins = Math.floor((new Date(checkOutTime) - new Date(checkInTime)) / 60000)
     if (diffMins < 0) {
       return "Invalid"
@@ -91,6 +106,7 @@ class EmailService {
     return `${hours} hour${hours > 1 ? "s" : ""}${mins > 0 ? ` ${mins} min` : ""}`
   }
 
+  // email's messages funcitons for diffrent type of messages
   async sendRegistration(data) {
     const html = registrationTemplate({
       id: data.id,
@@ -123,9 +139,7 @@ class EmailService {
   }
 
   async sendApproval(data) {
-    
     const html = appointmentApprovalTemplate({
-      
       id: data.id,
       visitorName: data.visitorName,
       date: this.formatDate(data.date),
@@ -140,7 +154,6 @@ class EmailService {
   }
 
   async sendRejection(data) {
-    
     const html = appointmentRejectionTemplate({
       
       visitorName: data.visitorName,
@@ -155,7 +168,6 @@ class EmailService {
   }
 
   async sendPass(data) {
-  
     const html = passGeneratedTemplate({
       id: data.id,
       visitorName: data.visitorName,
@@ -173,7 +185,6 @@ class EmailService {
   }
 
   async sendCheckIn(data) {
-    
     const html = checkInTemplate({
       visitorName: data.visitorName,
       passId: data.passId,
@@ -189,7 +200,6 @@ class EmailService {
   }
 
   async sendCheckOut(data) {
-    
     const html = checkOutTemplate({
       
       visitorName: data.visitorName,
@@ -208,7 +218,6 @@ class EmailService {
   }
 
   async sendSecurityAlert(data) {
-    
     const html = securityAlertTemplate({
       
       alertType: data.alertType,

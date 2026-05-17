@@ -1,67 +1,61 @@
 import api from './api';
 
 export const registerVisitor = async (formData) => {
-  try {
-    console.log("Sending registration request...");
-    const response = await api.post('/visitor/register', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-    console.log("Registration response:", response.data);
-    return response.data;
-  } catch (err) {
-    console.error("Registration error:", err.response?.data || err.message);
-    throw err;
-  }
+  const response = await api.post('/visitor/register', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return response.data;
 };
 
 export const loginVisitor = async (email, password) => {
   try {
+
     const response = await api.post('/visitor/login', { email, password });
     return response.data;
+
   } catch (err) {
-    console.error("Login error:", err.response?.data || err.message);
-    throw err;
+    // console.log("login problem..", err)
+    const msg = err.response?.data?.message || 'Login failed. Please check your credentials.';
+    throw new Error(msg);
   }
 };
 
 export const getVisitorProfile = async () => {
-  try {
-    const response = await api.get('/visitor/profile');
-    return response.data;
-  } catch (err) {
-    console.error("Error fetching profile:", err);
-    throw err;
-  }
+  const response = await api.get('/visitor/profile');
+  return response.data;
 };
 
 export const fetchVisitorDashboard = async () => {
   try {
+    // const res = await api.get("/dashboard")
     const response = await api.get('/visitor/dashboard');
     return response.data;
   } catch (err) {
-    console.error("Error fetching dashboard:", err);
-    return { totalAppointments: 0, pending: 0, approved: 0, rejected: 0, passGenerated: 0 };
+    // console.log("Problem in Visitor Dashbaord..", err.message)
+    return {
+      totalAppointments: 0,
+      pending: 0,
+      approved: 0,
+      rejected: 0,
+      passGenerated: 0,
+    };
   }
 };
 
 export const fetchVisitorAppointments = async () => {
   try {
-    const response = await api.get('/visitor/appointments');
-    return response.data;
+    const res = await api.get('/visitor/appointments');
+    return res.data;
   } catch (err) {
-    console.error("Error fetching appointments:", err);
+    // console.log("There is problem to fetch Visitor Appointment", err.message)
+    // return null;
     return [];
   }
 };
 
 export const fetchVisitorPasses = async () => {
-  try {
-    const response = await api.get('/visitor/passes');
-    return response.data;
-  } catch (err) {
-    console.error("Error fetching passes:", err);
-    return [];
-  }
+  const response = await api.get('/visitor/passes');
+  return response.data;
 };
 
 export const getVisitorPass = async (appointmentId) => {
@@ -69,27 +63,22 @@ export const getVisitorPass = async (appointmentId) => {
     const response = await api.get(`/visitor/pass/${appointmentId}`);
     return response.data;
   } catch (err) {
-    console.error("Error fetching pass:", err);
+    // console.log("problem to fetch visitor pass..", err.message)
     throw err;
   }
 };
 
 export const requestforAppointment = async (requestData) => {
-  try {
-    const response = await api.post('/visitor/appointments/request', requestData)
-    return response.data
-  } catch (err) {
-    console.error("Error requesting appointment:", err)
-    throw err
-  }
-}
+  const response = await api.post('/visitor/appointments/request', requestData);
+  return response.data;
+};
 
 export const getMyAppointmentRequests = async () => {
   try {
-    const response = await api.get('/visitor/appointments/requests')
-    return response.data
+    const response = await api.get('/visitor/appointments/requests');
+    return response.data;
   } catch (err) {
-    console.error("Error fetching requests:", err)
-    return { success: true, data: [] }
+    // console.warn('failed to fetch appointment requests:', err.message);
+    return { success: true, data: [] };
   }
-}
+};
