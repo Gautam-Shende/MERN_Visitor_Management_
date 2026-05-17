@@ -61,7 +61,7 @@ No paperwork, no confusion, everything tracked automatically.
 - Tailwind CSS for styling (no separate CSS files to manage)
 - Axios for API calls with interceptors
 - React Router DOM for navigation and protected routes
-- Recharts for dashboard analytics
+- Recharts for dashboard dynamic dashbaord analytics
 - html5-qrcode for QR scanning
 - React Hot Toast for notifications
 
