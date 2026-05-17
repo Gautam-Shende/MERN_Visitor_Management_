@@ -10,12 +10,12 @@ export const createPass = (appointmentId) => api.post(`/pass/${appointmentId}`).
 
 
 export const scanPass = (qrData) => {
-  console.log("🔵 scanPass service called with:", qrData);
+  // console.log("scanPass service called with:", qrData);
   return api.post('/pass/scan', qrData).then(res => {
-    console.log("✅ scanPass response:", res.data);
+    // console.log("scanPass response:", res.data);
     return res.data;
   }).catch(err => {
-    console.error("❌ scanPass error:", err.response?.data || err.message);
+    // console.error("scanPass error:", err.response?.data || err.message);
     throw err;
   });
 };

@@ -1,6 +1,7 @@
 
 import * as authService from "../../services/auth/authService.js"
 import { HTTP_STATUS, MESSAGES } from "../../../constants.js"
+import User from '../../models/User.js'
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.body
