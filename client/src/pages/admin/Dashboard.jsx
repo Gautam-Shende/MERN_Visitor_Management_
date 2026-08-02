@@ -9,10 +9,6 @@ import {
   FaHourglassHalf,
 } from "react-icons/fa";
 
-// import { fetchRecentVisitors } from '../../services/visitorService'
-// import { fetchAppointments } from '../../services/appointmentService'
-// import { fetchPasses } from '../../services/passService'
-
 import {
   BarChart,Bar,XAxis,YAxis,
   CartesianGrid,Tooltip,ResponsiveContainer, Cell

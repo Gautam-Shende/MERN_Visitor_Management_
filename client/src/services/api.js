@@ -26,23 +26,18 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     const status = error.response?.status;
-    // console.log("error", error.response)
     const requestUrl = error.config?.url;
 
     if (status === 401 && requestUrl) {
-      // if (requestUrl.findOne("/login") {
-      //   return Promise.reject(error);
-          // console.log("error", error)
-      // }
-
       if (requestUrl.includes("/login") || requestUrl.includes("/register")) {
         return Promise.reject(error);
-        // console.log("error : ", error)
       }
 
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      window.location.href = "/login";
+      if (window.location.pathname !== "/login" && window.location.pathname !== "/visitor/login") {
+        window.location.href = "/login";
+      }
     }
 
     return Promise.reject(error);

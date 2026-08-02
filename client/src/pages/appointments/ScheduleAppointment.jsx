@@ -262,10 +262,11 @@ const ScheduleAppointment = () => {
                     <input
                       type="date"
                       name="date"
+                      disabled={submitting}
                       min={new Date().toISOString().split('T')[0]}
                       value={formData.date}
                       onChange={handleInputChange}
-                      className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all"
+                      className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
                     />
                   </div>
                   
@@ -276,9 +277,10 @@ const ScheduleAppointment = () => {
                     <input
                       type="time"
                       name="time"
+                      disabled={submitting}
                       value={formData.time}
                       onChange={handleInputChange}
-                      className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all"
+                      className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
                     />
                   </div>
                 </div>
@@ -289,9 +291,10 @@ const ScheduleAppointment = () => {
                   </label>
                   <select
                     name="hostId"
+                    disabled={submitting}
                     value={formData.hostId}
                     onChange={handleInputChange}
-                    className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all"
+                    className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
                   >
                     <option value="">Select a host...</option>
                     {eligibleHosts.map((user) => (
@@ -306,6 +309,7 @@ const ScheduleAppointment = () => {
                   <Button 
                     variant="secondary" 
                     className="flex-1" 
+                    disabled={submitting}
                     onClick={() => navigate('/employee/requests')}
                   >
                     Cancel

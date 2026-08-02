@@ -7,7 +7,8 @@ const makeToken = (userId) => {
 }
 
 export const loginUser = async (email, password) => {
-  const user = await User.findOne({ email: email.toLowerCase() })
+  const sanitizedEmail = email ? email.toLowerCase().trim() : ""
+  const user = await User.findOne({ email: sanitizedEmail })
   if (!user) throw new Error("Invalid email or password")
 
   const passwordOk = await user.comparePassword(password)

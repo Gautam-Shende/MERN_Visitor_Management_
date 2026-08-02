@@ -55,7 +55,8 @@ export const registerVisitorService = async (visitorData, file) => {
 }
 
 export const loginVisitorService = async (email, password) => {
-  const visitor = await Visitor.findOne({ email })
+  const sanitizedEmail = email ? email.toLowerCase().trim() : ""
+  const visitor = await Visitor.findOne({ email: sanitizedEmail })
   if (!visitor) throw new Error(MESSAGES.VISITOR_NOT_FOUND)
 
   const match = await bcrypt.compare(password, visitor.password)
@@ -67,6 +68,7 @@ export const loginVisitorService = async (email, password) => {
     token,
     visitor: {
       id: visitor._id,
+      _id: visitor._id,
       name: visitor.name,
       email: visitor.email,
       phone: visitor.phone,

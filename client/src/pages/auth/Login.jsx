@@ -1,66 +1,55 @@
 
-// import { useMemo } from "react"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useAuth } from "../../context/AuthContext"
-// import { NavLink } from "react-router-dom"
 import { Link, useNavigate } from "react-router-dom"
 
 import Button from "../../components/common/Button"
 import Input from "../../components/common/Input"
 import Card from "../../components/common/Card"
 
-import { FaLock, FaEnvelope, 
-  FaSignInAlt, FaSpinner, FaUserPlus } from "react-icons/fa"
-
-import toast from "react-hot-toast";
+import { FaLock, FaEnvelope, FaSignInAlt, FaSpinner, FaUserPlus } from "react-icons/fa"
+import toast from "react-hot-toast"
 
 const Login = () => {
   const [email, setEmail] = useState("")
-  
-  // const [password, setPassword] = useState([])
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
- 
-  const { login, logout, user } = useAuth()
+
+  const { login } = useAuth()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (user) {
-      // console.log("User already logged in, logging out first");
-      logout();
-    }
-  }, [])
-
-
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    // console.log("You Login form submitted with email:", email);
-    setLoading(true);
+    e.preventDefault()
+    if (loading) return
+
+    setLoading(true)
 
     try {
-      const user = await login(email, password);
-      // console.log("Login successful for user:", user.email, "Role:", user.role);
-      toast.success("Login successful! Welcome back.");
+      const loggedInUser = await login(email, password)
+      toast.success("Login successful! Welcome back.")
 
-      if (user.role === "visitor") {
-
-        navigate("/visitor/dashboard");
-      } else if (user.role === "admin") {
-        navigate("/dashboard");
-      } else if (user.role === "security") {
-        navigate("/scan");
-      } else if (user.role === "employee") {
-        navigate("/employee/requests");
-      } else {
-        navigate("/visitors");
+      // Navigation target based on role
+      let targetPath = "/visitors"
+      if (loggedInUser.role === "visitor") {
+        targetPath = "/visitor/dashboard"
+      } else if (loggedInUser.role === "admin") {
+        targetPath = "/dashboard"
+      } else if (loggedInUser.role === "security") {
+        targetPath = "/scan"
+      } else if (loggedInUser.role === "employee") {
+        targetPath = "/employee/requests"
       }
+
+      navigate(targetPath, { replace: true })
     } catch (error) {
-      // console.log("Error response:", error.response?.data);
-      toast.error(error.response?.data?.message || "Invalid email or password");
-    } finally {
-      setLoading(false);
+      const errorMessage =
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        "Invalid email or password"
+      toast.error(errorMessage)
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-indigo-200 p-4">
@@ -77,12 +66,10 @@ const Login = () => {
             type="email"
             placeholder="Enter your email"
             value={email}
-            onChange={(e) => {
-              // console.log("Email input changed:", e.target.value);
-              setEmail(e.target.value);
-            }}
+            onChange={(e) => setEmail(e.target.value)}
             icon={<FaEnvelope className="text-gray-400" />}
             required
+            disabled={loading}
             label="Email Address"
           />
 
@@ -90,22 +77,22 @@ const Login = () => {
             type="password"
             placeholder="Enter your password"
             value={password}
-            onChange={(e) => {
-              // console.log("Password input changed");
-              setPassword(e.target.value);
-            }}
+            onChange={(e) => setPassword(e.target.value)}
             icon={<FaLock className="text-gray-400" />}
             required
+            disabled={loading}
             label="Password"
           />
 
           <Button
             type="submit"
             disabled={loading}
-            className="w-full bg-indigo-600 hover:from-blue-700 text-white py-3 rounded-xl text-lg font-semibold"
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl text-lg font-semibold"
           >
             {loading ? (
-              <FaSpinner className="animate-spin mx-auto" />
+              <span className="flex items-center justify-center gap-2">
+                <FaSpinner className="animate-spin" /> Authenticating...
+              </span>
             ) : (
               <span className="flex items-center justify-center gap-2">
                 <FaSignInAlt /> Sign In
@@ -119,6 +106,7 @@ const Login = () => {
             <Button
               variant="success"
               type="button"
+              disabled={loading}
               className="w-full text-white py-3 rounded-xl text-lg font-semibold"
             >
               <FaUserPlus /> Login as Visitor
@@ -127,7 +115,7 @@ const Login = () => {
         </div>
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

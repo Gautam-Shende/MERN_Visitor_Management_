@@ -4,9 +4,7 @@ import { useAuth } from "../../context/AuthContext"
 
 import Button from "../../components/common/Button"
 import Input from "../../components/common/Input"
-// import Table from "../../components/common/Table"
 import Card from "../../components/common/Card"
-import Spinner from "../../components/common/Spinner"
 
 import {
   FaEnvelope,
@@ -14,57 +12,55 @@ import {
   FaSignInAlt,
   FaUserPlus,
   FaUser,
+  FaSpinner,
 } from "react-icons/fa"
-
 import toast from "react-hot-toast"
-// import {fetchvisitorAppointment} from "../../services/appointmentService"
-import { loginVisitor } from "../../services/visitorAuthService";
+import { loginVisitor } from "../../services/visitorAuthService"
 import api from "../../services/api"
 
 const VisitorLogin = () => {
   const [form, setForm] = useState({
     email: "",
     password: "",
-  });
+  })
 
-  const [loading, setLoading] = useState(false);
-
-  const { setUser } = useAuth();
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false)
+  const { setUser } = useAuth()
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+    e.preventDefault()
+    if (loading) return
+
+    setLoading(true)
 
     try {
       const res = await loginVisitor(form.email, form.password)
 
-      const token = res.token;
-      // const visitorData = res.visitor?.visitor ;
-      const visitorData = res.visitor?.visitor || res.visitor;
+      const token = res.token
+      const visitorData = res.visitor?.visitor || res.visitor
 
       const userData = { ...visitorData, role: "visitor" }
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(userData));
+      localStorage.setItem("token", token)
+      localStorage.setItem("user", JSON.stringify(userData))
 
-      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      setUser(userData);
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`
+      setUser(userData)
 
-      toast.success("Login successful! Welcome back.");
-      navigate("/visitor/dashboard");
-
+      toast.success("Login successful! Welcome back.")
+      navigate("/visitor/dashboard", { replace: true })
     } catch (err) {
-       const errorMessage = 
-        err.response?.data?.message ||  "Login failed. Please check your credentials."
+      const errorMessage =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        "Login failed. Please check your credentials."
       toast.error(errorMessage)
-      // console.log(err.response?.data?.message)
-    } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
@@ -79,7 +75,7 @@ const VisitorLogin = () => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="px-8 py-3">
+        <form onSubmit={handleSubmit} className="px-8 py-3 space-y-4">
           <Input
             name="email"
             type="email"
@@ -88,6 +84,7 @@ const VisitorLogin = () => {
             onChange={handleChange}
             icon={<FaEnvelope className="text-gray-400" />}
             required
+            disabled={loading}
             label="Email Address"
           />
 
@@ -99,6 +96,7 @@ const VisitorLogin = () => {
             onChange={handleChange}
             icon={<FaLock className="text-gray-400" />}
             required
+            disabled={loading}
             label="Password"
           />
 
@@ -108,7 +106,9 @@ const VisitorLogin = () => {
             className="w-full bg-[#3b82f6] hover:bg-[#2563eb] text-white py-3 rounded-xl text-lg font-semibold transition-all duration-300"
           >
             {loading ? (
-              <Spinner size="sm" color="light" />
+              <span className="flex items-center justify-center gap-2">
+                <FaSpinner className="animate-spin" /> Sign In...
+              </span>
             ) : (
               <span className="flex items-center justify-center gap-2">
                 <FaSignInAlt /> Sign In
@@ -117,11 +117,12 @@ const VisitorLogin = () => {
           </Button>
         </form>
 
-        <div className="flex justify-center flex-col gap-2">
+        <div className="p-8 pt-0 flex justify-center flex-col gap-2">
           <Link to="/visitor/register">
             <Button
               variant="success"
               type="button"
+              disabled={loading}
               className="w-full mt-3 text-white py-3 rounded-xl text-lg font-semibold"
             >
               <FaUserPlus className="mr-2" /> Create an account
@@ -132,6 +133,7 @@ const VisitorLogin = () => {
             <Button
               variant="primary"
               type="button"
+              disabled={loading}
               className="w-full text-white py-3 rounded-xl text-lg font-semibold"
             >
               <FaUser className="mr-2" /> Staff Login
@@ -143,4 +145,4 @@ const VisitorLogin = () => {
   )
 }
 
-export default VisitorLogin;
+export default VisitorLogin

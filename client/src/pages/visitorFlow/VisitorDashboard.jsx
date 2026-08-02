@@ -113,6 +113,7 @@ const RequestAppointmentModal = ({ isOpen, onClose, onSuccess }) => {
           <Input
             label="Preferred Date"
             required
+            disabled={loading}
             type="date"
             min={new Date().toISOString().split("T")[0]}
             value={formData.preferredDate}
@@ -122,6 +123,7 @@ const RequestAppointmentModal = ({ isOpen, onClose, onSuccess }) => {
           <Input
             label="Preferred Time"
             required
+            disabled={loading}
             type="time"
             value={formData.preferredTime}
             onChange={handleChange("preferredTime")}
@@ -130,6 +132,7 @@ const RequestAppointmentModal = ({ isOpen, onClose, onSuccess }) => {
           <Input
             label="Purpose of Visit"
             required
+            disabled={loading}
             type="text"
             placeholder="e.g., Meeting, Interview, Delivery"
             value={formData.purpose}
@@ -142,10 +145,11 @@ const RequestAppointmentModal = ({ isOpen, onClose, onSuccess }) => {
             </label>
             <textarea
               rows={3}
+              disabled={loading}
               placeholder="Any message for the employee..."
               value={formData.message}
               onChange={handleChange("message")}
-              className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none resize-none"
+              className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none resize-none disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
             />
           </div>
 
@@ -155,6 +159,7 @@ const RequestAppointmentModal = ({ isOpen, onClose, onSuccess }) => {
               className="w-full"
               size="md"
               variant="secondary"
+              disabled={loading}
               onClick={handleClose}
             >
               Cancel

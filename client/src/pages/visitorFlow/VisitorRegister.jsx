@@ -168,6 +168,7 @@ const VisitorRegister = () => {
                 icon={<FaUser className="text-blue-500" />}
                 error={errors.name}
                 required
+                disabled={loading}
               />
               <Input
                 name="email"
@@ -179,6 +180,7 @@ const VisitorRegister = () => {
                 icon={<FaEnvelope className="text-blue-500" />}
                 error={errors.email}
                 required
+                disabled={loading}
               />
               <Input
                 name="phone"
@@ -189,6 +191,7 @@ const VisitorRegister = () => {
                 icon={<FaPhone className="text-blue-500" />}
                 error={errors.phone}
                 required
+                disabled={loading}
               />
             </div>
 
@@ -203,6 +206,7 @@ const VisitorRegister = () => {
                 icon={<FaInfoCircle className="text-blue-500" />}
                 error={errors.purpose}
                 required
+                disabled={loading}
               />
               <Input
                 name="password"
@@ -214,6 +218,7 @@ const VisitorRegister = () => {
                 icon={<FaLock className="text-blue-500" />}
                 error={errors.password}
                 required
+                disabled={loading}
               />
               <Input
                 name="confirmPassword"
@@ -225,6 +230,7 @@ const VisitorRegister = () => {
                 icon={<FaLock className="text-blue-500" />}
                 error={errors.confirmPassword}
                 required
+                disabled={loading}
               />
             </div>
           </div>
@@ -245,7 +251,8 @@ const VisitorRegister = () => {
                   <button
                     type="button"
                     onClick={removePhoto}
-                    className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center hover:bg-red-600"
+                    disabled={loading}
+                    className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center hover:bg-red-600 disabled:opacity-50"
                   >
                     ×
                   </button>
@@ -258,6 +265,7 @@ const VisitorRegister = () => {
               <Button
                 type="button"
                 variant="outline"
+                disabled={loading}
                 onClick={() => document.getElementById("photo-upload").click()}
                 className="border border-blue-500 text-blue-600 hover:bg-blue-50"
               >
@@ -266,6 +274,7 @@ const VisitorRegister = () => {
               <input
                 id="photo-upload"
                 type="file"
+                disabled={loading}
                 accept="image/jpeg,image/png,image/jpg"
                 onChange={handleFile}
                 className="hidden"
@@ -280,7 +289,7 @@ const VisitorRegister = () => {
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl text-base font-semibold mt-5"
           >
             {loading ? (
-              <Spinner size="sm" color="light" />
+              <Spinner size="sm" color="light" text="Creating Account..." />
             ) : (
               <span className="flex items-center justify-center gap-2">
                 <FaUserPlus /> Create Account

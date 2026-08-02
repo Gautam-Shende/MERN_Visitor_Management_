@@ -216,13 +216,15 @@ const Reports = () => {
               placeholder="Search by name"
               value={filters.name}
               onChange={handleChange}
+              disabled={loading}
               icon={<FaSearch size={14} />}
             />
             <select
               name="status"
               value={filters.status}
               onChange={handleChange}
-              className="w-full rounded-xl text-sm bg-[#f5f9ff] border border-[#e2eaf5] px-4 py-3 text-[#1e293b] focus:border-[#2463eb] focus:outline-none"
+              disabled={loading}
+              className="w-full rounded-xl text-sm bg-[#f5f9ff] border border-[#e2eaf5] px-4 py-3 text-[#1e293b] focus:border-[#2463eb] focus:outline-none disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
             >
               <option value="all">All</option>
               <option value="approved">Approved</option>
@@ -235,7 +237,7 @@ const Reports = () => {
 
           <div className="mt-4">
             <Button onClick={fetchReport} disabled={loading} variant="primary">
-              {loading ? <Spinner size="sm" color="light" /> : <><FaChartBar size={14} className="mr-2" /> Generate Report</>}
+              {loading ? <Spinner size="sm" color="light" text="Generating..." /> : <><FaChartBar size={14} className="mr-2" /> Generate Report</>}
             </Button>
           </div>
 

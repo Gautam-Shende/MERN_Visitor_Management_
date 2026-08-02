@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom"
 import { useState } from "react";
 import { AuthProvider, useAuth } from "./context/AuthContext"
 // import Model from "./components/comman/Model.js"
@@ -39,22 +39,29 @@ import VisitorPassDetails from "./pages/visitorFlow/VisitorPassDetails"
 
 import { Toaster } from "react-hot-toast";
 
+// Routes where Navbar and Sidebar must NOT appear
+const AUTH_ROUTES = ["/login", "/visitor/login", "/visitor/register"];
 
 function AppContent() {
   const { user } = useAuth();
+  const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const closeSidebar = () => setIsSidebarOpen(false);
 
+  // Hide layout shell on auth pages regardless of user state
+  const isAuthRoute = AUTH_ROUTES.includes(location.pathname);
+  const showLayout = user && !isAuthRoute;
+
   return (
     
     <div className="flex h-screen bg-gray-50 overflow-hidden">
       <Toaster position="top-right" reverseOrder={false} />
-      {user && <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />}
+      {showLayout && <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />}
       
       <div className="flex-1 flex flex-col overflow-hidden">
-        {user && <Navbar onMenuClick={toggleSidebar} isSidebarOpen={isSidebarOpen} />}
+        {showLayout && <Navbar onMenuClick={toggleSidebar} isSidebarOpen={isSidebarOpen} />}
         
         <main className="flex-1 overflow-y-auto p-4">
           <Routes>

@@ -109,14 +109,14 @@ export const PASS_STATUS = {
 };
 
 
-export const BUTTON_BASE = "rounded-xl font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 inline-flex items-center justify-center"
+export const BUTTON_BASE = "rounded-xl font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 inline-flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none"
 
 export const BUTTON_VARIANTS = {
   primary: "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-600 shadow-sm hover:shadow",
   secondary: "bg-gray-300 text-gray-700 border border-gray-200 hover:bg-gray-400 hover:text-gray-900 focus:ring-gray-500",
   danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-600 shadow-sm hover:shadow",
   success: "bg-green-600 text-white hover:bg-green-700 focus:ring-green-600 shadow-sm hover:shadow",
-  outline: "border-1 border-blue-600 text-blue-600",
+  outline: "border-1 border-blue-600 text-blue-600 hover:bg-blue-50",
   ghost: "text-gray-700 hover:bg-blue-50 hover:text-blue-600 focus:ring-gray-500",
 }
 
@@ -145,7 +145,7 @@ export const CARD_SHADOWS = {
   xl: "shadow-xl",
 }
 
-export const INPUT_BASE = "w-full rounded-xl text-sm transition-all duration-200 border border-[#d8dbde] focus:border-[#2463eb] focus:ring-[#2463eb] focus:outline-none focus:ring-1 focus:ring-opacity-20 placeholder:text-[#8b9eb0] text-[#1e293b]"
+export const INPUT_BASE = "w-full rounded-xl text-sm transition-all duration-200 border border-[#d8dbde] focus:border-[#2463eb] focus:ring-[#2463eb] focus:outline-none focus:ring-1 focus:ring-opacity-20 placeholder:text-[#8b9eb0] text-[#1e293b] disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:border-gray-200"
 export const INPUT_LABEL = "block text-sm font-medium text-[#0b1e3c] mb-1"
 export const INPUT_REQUIRED_STAR = "text-[#ec3c3c] ml-1"
 export const INPUT_ICON_WRAPPER = "absolute left-3 top-1/2 transform -translate-y-1/2 text-[#7d8a96]"

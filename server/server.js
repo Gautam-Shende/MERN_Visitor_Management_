@@ -16,7 +16,6 @@ import userRoutes from "./src/routes/userRoutes.js"
 import visitorAuthRoutes from "./src/routes/visitorAuthRoutes.js"
 
 import path from 'path';
-// import { fileURLToPath } from 'url';
 import { HTTP_STATUS, MESSAGES } from "./constants.js"
 
 
@@ -42,15 +41,6 @@ app.use("/", dashboardRoutes)
 app.use("/", reportRoutes)
 app.use("/", exportRoutes)
 app.use("/", userRoutes)
-
-// app.use((req, res) => {
-//   res.status(HTTP_STATUS.BAD_REQUEST).json({ error: `Route ${req.originalUrl} not found` })
-// })
-
-// app.use((err, req, res, next) => {
-//   console.error("Server Error:", err.message)
-//   res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: MESSAGES.SERVER_ERROR })
-// })
 
 const PORT = process.env.PORT || 4000
 
