@@ -108,14 +108,14 @@ const Login = () => {
 
         <div className="mt-4 text-center">
           <Button
+            as={Link}
+            to="/visitor/login"
             variant="success"
             type="button"
             disabled={loading}
             className="w-full text-white py-3 rounded-xl text-lg font-semibold"
           >
-            <Link to="/visitor/login" className="block w-full">
               <FaUserPlus /> Login as Visitor{" "}
-            </Link>
           </Button>
         </div>
       </Card>
