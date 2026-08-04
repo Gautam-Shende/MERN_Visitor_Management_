@@ -1,55 +1,60 @@
+import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 
-import { useState } from "react"
-import { useAuth } from "../../context/AuthContext"
-import { Link, useNavigate } from "react-router-dom"
+import Button from "../../components/common/Button";
+import Input from "../../components/common/Input";
+import Card from "../../components/common/Card";
 
-import Button from "../../components/common/Button"
-import Input from "../../components/common/Input"
-import Card from "../../components/common/Card"
-
-import { FaLock, FaEnvelope, FaSignInAlt, FaSpinner, FaUserPlus } from "react-icons/fa"
-import toast from "react-hot-toast"
+import {
+  FaLock,
+  FaEnvelope,
+  FaSignInAlt,
+  FaSpinner,
+  FaUserPlus,
+} from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const Login = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const { login } = useAuth()
-  const navigate = useNavigate()
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (loading) return
+    e.preventDefault();
+    if (loading) return;
 
-    setLoading(true)
+    setLoading(true);
 
     try {
-      const loggedInUser = await login(email, password)
-      toast.success("Login successful! Welcome back.")
+      const loggedInUser = await login(email, password);
+      toast.success("Login successful! Welcome back.");
 
       // Navigation target based on role
-      let targetPath = "/visitors"
+      let targetPath = "/visitors";
       if (loggedInUser.role === "visitor") {
-        targetPath = "/visitor/dashboard"
+        targetPath = "/visitor/dashboard";
       } else if (loggedInUser.role === "admin") {
-        targetPath = "/dashboard"
+        targetPath = "/dashboard";
       } else if (loggedInUser.role === "security") {
-        targetPath = "/scan"
+        targetPath = "/scan";
       } else if (loggedInUser.role === "employee") {
-        targetPath = "/employee/requests"
+        targetPath = "/employee/requests";
       }
 
-      navigate(targetPath, { replace: true })
+      navigate(targetPath, { replace: true });
     } catch (error) {
       const errorMessage =
         error.response?.data?.message ||
         error.response?.data?.error ||
-        "Invalid email or password"
-      toast.error(errorMessage)
-      setLoading(false)
+        "Invalid email or password";
+      toast.error(errorMessage);
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-indigo-200 p-4">
@@ -102,11 +107,10 @@ const Login = () => {
         </form>
 
         <div className="mt-4 text-center">
-          <Link to="/visitor/login" className="block w-full">
+          <Link disabled={loading} to="/visitor/login" className="block w-full">
             <Button
               variant="success"
               type="button"
-              disabled={loading}
               className="w-full text-white py-3 rounded-xl text-lg font-semibold"
             >
               <FaUserPlus /> Login as Visitor
@@ -115,7 +119,7 @@ const Login = () => {
         </div>
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
