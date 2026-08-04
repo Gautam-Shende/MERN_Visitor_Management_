@@ -114,7 +114,7 @@ const Login = () => {
               type="button"
               className="w-full text-white py-3 rounded-xl text-lg font-semibold"
             >
-              <Link to="/visitor/login" className="flex gap-3"><FaUserPlus /> Login as Visitor</Link>
+              <Link to="/visitor/login" className="flex w-full items-center justify-center gap-3"><FaUserPlus /> Login as Visitor</Link>
             </Button>
           {/* </Link> */}
         </div>
