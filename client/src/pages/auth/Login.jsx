@@ -12,6 +12,8 @@ import {
   FaSignInAlt,
   FaSpinner,
   FaUserPlus,
+  FaEye,
+  FaEyeSlash,
 } from "react-icons/fa";
 import toast from "react-hot-toast";
 
@@ -19,6 +21,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false);
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -79,7 +82,8 @@ const Login = () => {
           />
 
           <Input
-            type="password"
+            name="password"
+            type={show ? "text" : "password"}
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -87,6 +91,16 @@ const Login = () => {
             required
             disabled={loading}
             label="Password"
+            rightIcon={
+              <button
+                type="button"
+                onClick={() => setShow(!show)}
+                className="text-gray-500 hover:text-gray-700"
+                disabled={loading}
+              >
+                {show ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            }
           />
 
           <Button
@@ -108,14 +122,19 @@ const Login = () => {
 
         <div className="mt-4 text-center">
           {/* <Link to="/visitor/login" className="block w-full"> */}
-            <Button
-              disabled={loading}
-              variant="success"
-              type="button"
-              className="w-full text-white py-3 rounded-xl text-lg font-semibold"
+          <Button
+            disabled={loading}
+            variant="success"
+            type="button"
+            className="w-full text-white py-3 rounded-xl text-lg font-semibold"
+          >
+            <Link
+              to="/visitor/login"
+              className="flex w-full items-center justify-center gap-3"
             >
-              <Link to="/visitor/login" className="flex w-full items-center justify-center gap-3"><FaUserPlus /> Login as Visitor</Link>
-            </Button>
+              <FaUserPlus /> Login as Visitor
+            </Link>
+          </Button>
           {/* </Link> */}
         </div>
       </Card>

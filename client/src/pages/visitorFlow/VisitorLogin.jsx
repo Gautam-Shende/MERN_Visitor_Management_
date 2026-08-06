@@ -13,6 +13,8 @@ import {
   FaUserPlus,
   FaUser,
   FaSpinner,
+  FaEye,
+  FaEyeSlash,
 } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { loginVisitor } from "../../services/visitorAuthService";
@@ -27,6 +29,7 @@ const VisitorLogin = () => {
   const [loading, setLoading] = useState(false);
   const { setUser } = useAuth();
   const navigate = useNavigate();
+  const [show, setShow] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -89,7 +92,7 @@ const VisitorLogin = () => {
 
           <Input
             name="password"
-            type="password"
+            type={show ? "text" : "password"}
             placeholder="Enter your password"
             value={form.password}
             onChange={handleChange}
@@ -97,6 +100,16 @@ const VisitorLogin = () => {
             required
             disabled={loading}
             label="Password"
+            rightIcon={
+              <button
+                type="button"
+                onClick={() => setShow(!show)}
+                className="text-gray-500 hover:text-gray-700"
+                disabled={loading}
+              >
+                {show ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            }
           />
 
           <Button
