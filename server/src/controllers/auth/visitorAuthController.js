@@ -1,74 +1,40 @@
 
 import * as visitorAuthService from "../../services/auth/visitorAuthService.js"
-import * as appointmentService from "../../services/appointment/appointmentService.js"  
+import * as appointmentService from "../../services/appointment/appointmentService.js"
 import { HTTP_STATUS, MESSAGES } from "../../../constants.js"
 
-// export const registerVisitor = async (req, res) => {
-
-//   const { name, email, password, phone} = req.body;
-
-//   // const photo = req.body;
-//   const photo = req.file;
-
-//   if (!name || !email || !password || !phone) {
-//     return res.status(HTTP_STATUS.BAD_REQUEST).json({  message: MESSAGES.VISITOR_REGISTER_ERROR })
-//   }
-
-//   if (password.length < 6) {
-//     return res.status(HTTP_STATUS.BAD_REQUEST).json({  message: "Password must be 6+ characters" })
-//   }
-
-//   try {
-//     const result = await visitorAuthService.registerVisitorService(
-//       { name, email, password, phone}, photo);
-
-//     return res.status(HTTP_STATUS.CREATED).json({
-//       message: MESSAGES.REGISTER_SUCCESS,
-//       token: result.token,
-//       visitor: result.visitor
-//     })
-
-//   } catch (err) {
-//     if (err.message === "Visitor already registered with this email") {
-//           // console.log({error: MESSAGES.EMAIL_EXISTS})
-//       return res.status(HTTP_STATUS.CONFLICT).json({ message: MESSAGES.EMAIL_EXISTS})
-//     }
-//     return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: MESSAGES.SERVER_ERROR })
-//   }
-// }
-
+// Visitor Registration Controller
 export const registerVisitor = async (req, res) => {
   const { name, email, password, phone, purpose } = req.body
   const photo = req.file
-  
+
   if (!name || !email || !password || !phone) {
-    return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: "All fields required" })
+    return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: "All fields required" })
   }
-  
+
   if (password.length < 6) {
-    return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: "Password must be 6+ characters" })
+    return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: "Password must be 6+ characters" })
   }
-  
+
   try {
     const result = await visitorAuthService.registerVisitorService(
       { name, email, password, phone, purpose },
       photo
     )
-    res.status(HTTP_STATUS.CREATED).json({
-      message: "Registration successful",
+    return res.status(HTTP_STATUS.CREATED).json({
+      message: MESSAGES.REGISTER_SUCCESS,
       token: result.token,
-      visitor: result.visitor
+      visitor: result.visitor,
     })
   } catch (error) {
-    console.log("Registration error:", error.message)
-    
     if (error.message === "Visitor already registered with this email") {
-      return res.status(HTTP_STATUS.CONFLICT).json({ error: "Email already exists" })
+      return res.status(HTTP_STATUS.CONFLICT).json({ message: MESSAGES.EMAIL_EXISTS })
     }
-    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: "Server error" })
+    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: MESSAGES.SERVER_ERROR })
   }
 }
 
+// Visitor Login Controller
 export const loginVisitor = async (req, res) => {
   const { email, password } = req.body
 
@@ -76,8 +42,7 @@ export const loginVisitor = async (req, res) => {
     return res.status(HTTP_STATUS.BAD_REQUEST).json({
       success: false,
       message: MESSAGES.LOGIN_ERROR,
-      //  error: MESSAGES.LOGIN_ERROR 
-      })
+    })
   }
 
   try {
@@ -86,43 +51,41 @@ export const loginVisitor = async (req, res) => {
       success: true,
       message: MESSAGES.LOGIN_SUCCESS,
       token: result.token,
-      visitor: result.visitor
+      visitor: result.visitor,
     })
   } catch (err) {
-    // console.log({ error: MESSAGES.LOGIN_FAILED })
-    return res.status(HTTP_STATUS.UNAUTHORIZED).json({ 
+    return res.status(HTTP_STATUS.UNAUTHORIZED).json({
       success: false,
       message: MESSAGES.LOGIN_FAILED,
-      // error: MESSAGES.LOGIN_FAILED 
     })
   }
 }
 
+// Get Visitor Profile Controller
 export const getVisitorProfile = async (req, res) => {
-  const visitorId = req.visitor?._id;
+  const visitorId = req.visitor?._id
 
-  if (!visitorId){
-     return res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: MESSAGES.UNAUTHORIZED })
+  if (!visitorId) {
+    return res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: MESSAGES.UNAUTHORIZED })
   }
 
   try {
     const visitor = await visitorAuthService.getVisitorProfileService(visitorId)
-    return res.status(HTTP_STATUS.OK).json(visitor);
-
+    return res.status(HTTP_STATUS.OK).json(visitor)
   } catch (err) {
-    // console.log({ error: MESSAGES.SERVER_ERROR })
     return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: MESSAGES.SERVER_ERROR })
   }
 }
 
+// Request Appointment Controller
 export const requestAppointment = async (req, res) => {
-  const visitorId = req.visitor?._id;
+  const visitorId = req.visitor?._id
 
   if (!visitorId) {
     return res.status(HTTP_STATUS.UNAUTHORIZED).json({ success: false, message: MESSAGES.UNAUTHORIZED })
   }
 
-  const { preferredDate, purpose, message } = req.body;
+  const { preferredDate, purpose, message } = req.body
 
   if (!preferredDate) {
     return res.status(HTTP_STATUS.BAD_REQUEST).json({ success: false, message: "Preferred date is required" })
@@ -137,20 +100,20 @@ export const requestAppointment = async (req, res) => {
       visitorId,
       preferredDate,
       purpose,
-      message
+      message,
     })
 
     return res.status(HTTP_STATUS.CREATED).json({
       success: true,
       message: MESSAGES.APPOINTMENT_REQUEST_SUCCESS,
-      data: appointment
+      data: appointment,
     })
   } catch (err) {
-    // console.log({ success: false, message: err.message || "Failed to submit request" })
     return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ success: false, message: err.message || "Failed to submit request" })
   }
 }
 
+// Get My Appointment Requests Controller
 export const getMyRequests = async (req, res) => {
   const visitorId = req.visitor?._id
 
@@ -165,3 +128,4 @@ export const getMyRequests = async (req, res) => {
     return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ success: false, message: "Failed to fetch requests..." })
   }
 }
+

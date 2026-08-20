@@ -8,6 +8,9 @@ export const getAllVisitors = async () => {
 
 export const getVisitorById = async (id) => {
   const visitor = await Visitor.findById(id).populate("host", "name email")
-  if (!visitor) throw new Error("Visitor not found")
+  if (!visitor) {
+    throw new Error("Visitor not found")
+  }
   return visitor
 }
+
