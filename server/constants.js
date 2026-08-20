@@ -1,4 +1,5 @@
 
+// reusable fixed values provide 
 
 export const ROLES = {
   ADMIN: "admin",
