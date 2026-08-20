@@ -1,52 +1,36 @@
 
 import jwt from "jsonwebtoken"
 import Visitor from "../models/Visitor.js"
-import { HTTP_STATUS, MESSAGES } from "../../constants.js";
+import { HTTP_STATUS, MESSAGES } from "../../constants.js"
 
+// Authentication middleware to verify visitor JWT token
 export const protectVisitor = async (req, res, next) => {
   try {
+    const authHeader = req.headers.authorization
 
-    const authHeader = req.headers.authorization;
-
+    // Verify presence of Bearer token
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return res.status(HTTP_STATUS.UNAUTHORIZED).json({
-        message: MESSAGES.UNAUTHORIZED,
-      })
+      return res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: MESSAGES.TOKEN_MISSING || MESSAGES.UNAUTHORIZED })
     }
 
-    const token = authHeader.split(" ")[1];
+    const token = authHeader.split(" ")[1]
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // Verify token using JWT_SECRET
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
-    const visitor = await Visitor.findById(decoded.id).select("-password");
-
+    // Find authenticated visitor by ID
+    const visitor = await Visitor.findById(decoded.id).select("-password")
     if (!visitor) {
-      return res.status(HTTP_STATUS.UNAUTHORIZED).json({
-        message: MESSAGES.VISITOR_NOT_FOUND,
-      })
+      return res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: MESSAGES.VISITOR_NOT_FOUND })
     }
 
-    req.visitor = visitor;
-
-    next();
-
+    // Attach visitor object to request
+    req.visitor = visitor
+    next()
   } catch (err) {
-    console.error("Visitor auth error:", err);
-
     if (err.name === "TokenExpiredError") {
-      return res.status(HTTP_STATUS.UNAUTHORIZED).json({
-        message: MESSAGES.TOKEN_SESSION_EXPIRED,
-      })
+      return res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: MESSAGES.TOKEN_SESSION_EXPIRED })
     }
-
-    if (err.name === "JsonWebTokenError") {
-      return res.status(HTTP_STATUS.UNAUTHORIZED).json({
-        message: MESSAGES.TOKEN_INVALID,
-      });
-    }
-
-    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
-      message: "Something went wrong during authentication" || MESSAGES.SERVER_ERROR,
-    });
+    return res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: MESSAGES.TOKEN_INVALID })
   }
-};
+}
