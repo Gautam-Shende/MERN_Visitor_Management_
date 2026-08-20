@@ -5,18 +5,14 @@ import Pass from "../../models/Pass.js"
 import Appointment from "../../models/Appointment.js"
 import CheckLog from "../../models/CheckLog.js"
 
-
-// import { storage } from "../../middleware/uploadMiddleware.js"
 import emailService from "../../utils/emailService.js"
 import { generatePassPDF } from "../../utils/pdfGenerator.js"
 import generateQRCode from "../../utils/qrGenerator.js"
-
 import cloudinary from "../../config/Cloudinary/cloudinary.js"
 
-// this added for downloading pass ,having some problem facing with cloudinary 
+// Helper function to upload PDF buffer to Cloudinary
 const uploadPDFToCloud = async (pdfBuffer, passId) => {
   const base64PDF = pdfBuffer.toString("base64")
-  // data file location addedd
   const dataURI = `data:application/pdf;base64,${base64PDF}`
 
   const res = await cloudinary.uploader.upload(dataURI, {
@@ -29,19 +25,19 @@ const uploadPDFToCloud = async (pdfBuffer, passId) => {
   return { url: res.secure_url, publicId: res.public_id }
 }
 
+// Generate digital pass for approved appointment
 export const generatePass = async (appointmentId) => {
   const appointment = await Appointment.findById(appointmentId)
     .populate("visitor")
     .populate("host", "name email")
 
   if (!appointment) {
-    throw new Error("Appointment not found") 
+    throw new Error("Appointment not found")
   }
   if (appointment.status !== "approved") {
     throw new Error("Appointment not approved")
   }
 
-  // const existing = await Pass.findbtId({ appointment._id })
   const existing = await Pass.findOne({ appointment: appointment._id })
   if (existing) {
     throw new Error("Pass already generated")
@@ -55,12 +51,14 @@ export const generatePass = async (appointmentId) => {
 
   await pass.save()
 
+  // Generate QR Code
   const qrResult = await generateQRCode(pass._id)
   if (qrResult) {
     pass.qrCode = qrResult.cloudinaryUrl
     pass.qrPublicId = qrResult.cloudinaryPublicId
   }
 
+  // Generate PDF Pass
   try {
     const pdfBuffer = await generatePassPDF({
       company_name: process.env.COMPANY_NAME || "Visitor Management System",
@@ -84,6 +82,7 @@ export const generatePass = async (appointmentId) => {
 
   await pass.save()
 
+  // Send Pass Email
   try {
     await emailService.sendPass({
       id: pass._id,
@@ -101,10 +100,13 @@ export const generatePass = async (appointmentId) => {
   return pass
 }
 
+// Scan pass for check-in or check-out
 export const scanPass = async (qrData) => {
   const passId = qrData.startsWith("PASS:") ? qrData.replace("PASS:", "") : qrData
 
-  if (!mongoose.Types.ObjectId.isValid(passId)) throw new Error("Invalid pass ID")
+  if (!mongoose.Types.ObjectId.isValid(passId)) {
+    throw new Error("Invalid pass ID")
+  }
 
   const pass = await Pass.findById(passId).populate("visitor", "name email phone")
   if (!pass) {
@@ -119,6 +121,7 @@ export const scanPass = async (qrData) => {
   let result = {}
 
   if (activeLog) {
+    // Perform Check-out
     activeLog.checkOutTime = new Date()
     await activeLog.save()
 
@@ -152,12 +155,11 @@ export const scanPass = async (qrData) => {
         duration,
       })
     } catch (err) {
-      // console.error("Checkout email failed:", err.message);
-      throw new Error("CheckOut email failed:", err.message)
+      console.error("Checkout email failed:", err.message)
     }
   } else {
+    // Perform Check-in
     const checkLog = new CheckLog({ pass: pass._id, checkInTime: new Date() })
-    
     await checkLog.save()
 
     pass.status = "inside"
@@ -180,9 +182,7 @@ export const scanPass = async (qrData) => {
         location: "Main Entrance",
       })
     } catch (err) {
-      // console.error("Checkin email failed:", err.message)
-      throw new Error("Checkin email failed:", err.message)
-
+      console.error("Checkin email failed:", err.message)
     }
   }
 
@@ -194,14 +194,15 @@ export const scanPass = async (qrData) => {
   }
 }
 
+// Fetch all passes
 export const getAllPasses = async () => {
-  // fetch with all data
   return await Pass.find()
     .populate("visitor", "name email phone photo")
     .populate({ path: "appointment", populate: { path: "host", select: "name email" } })
     .sort({ createdAt: -1 })
 }
 
+// Fetch single pass by ID
 export const getPassById = async (id) => {
   const pass = await Pass.findById(id)
     .populate("visitor")
@@ -210,9 +211,11 @@ export const getPassById = async (id) => {
   if (!pass) {
     throw new Error("Pass not found")
   }
-    return pass;
+  return pass
 }
 
+// Fetch check logs for a pass
 export const getCheckLogsByPassId = async (passId) => {
   return await CheckLog.find({ pass: passId }).sort({ checkInTime: -1 })
 }
+
