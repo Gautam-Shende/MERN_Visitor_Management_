@@ -2,7 +2,7 @@
 import { useAuth } from '../../context/AuthContext'
 import Card from '../../components/common/Card'
 import Button from '../../components/common/Button'
-import StatusBadge from '../../components/common/StatusBadge'  // ✅ ADDED
+import StatusBadge from '../../components/common/StatusBadge'  
 
 // import Input from '../../components/common/Input'
 // import Spinner from '../../components/common/Spinner'
