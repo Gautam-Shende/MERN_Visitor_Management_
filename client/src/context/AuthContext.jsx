@@ -1,8 +1,8 @@
 
-// AuthContext.jsx
 import { createContext, useContext, useEffect, useState } from "react"
 import api from "../services/api"
 
+// Authcontext for authentication users. 
 const AuthContext = createContext()
 
 export const useAuth = () => useContext(AuthContext)
@@ -10,6 +10,7 @@ export const useAuth = () => useContext(AuthContext)
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     try {
+      // store user data to localstorage 
       const storedUser = localStorage.getItem("user")
       return storedUser ? JSON.parse(storedUser) : null
     } catch {
@@ -17,6 +18,7 @@ export const AuthProvider = ({ children }) => {
     }
   })
 
+  // add user login token in loclstorage
   const [token, setToken] = useState(() => localStorage.getItem("token") || null)
   const [loading, setLoading] = useState(true)
 
@@ -55,6 +57,7 @@ export const AuthProvider = ({ children }) => {
     delete api.defaults.headers.common["Authorization"]
   }
 
+  // User data in localstorage
   const setUserData = (userData) => {
     setUser(userData)
     if (userData) {
@@ -78,4 +81,4 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   )
-}
+}
